@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6a65fb83-799f-488a-9e47-69186f138516" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CopilotChatHistory.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CopilotChatHistory.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="38i98XIg5g2b6320Zw5cfwHIw3C" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.a_stock_market_fetcher_batch.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.agent_factor_mining (1).executor&quot;: &quot;Debug&quot;,
+    &quot;Python.agent_factor_mining (2).executor&quot;: &quot;Run&quot;,
+    &quot;Python.agent_factor_mining.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ai_factor_mining.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ai_factor_mining_api (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.ai_factor_mining_api.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.check_python.executor&quot;: &quot;Run&quot;,
+    &quot;Python.daily_cron.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.data_downloader (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_downloader.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.data_generator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_interface.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.data_interface_tushare.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.data_reader_example.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.debug_deepseek.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.diagnose_industry.executor&quot;: &quot;Run&quot;,
+    &quot;Python.direct_test_categorize.executor&quot;: &quot;Run&quot;,
+    &quot;Python.factor_backtest_manager.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.factor_mining_agent (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.factor_mining_agent.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.factor_mining_framework.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.factor_mining_pipeline.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_pdf.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.main (1).executor&quot;: &quot;Debug&quot;,
+    &quot;Python.main.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.pdf_converter.executor&quot;: &quot;Run&quot;,
+    &quot;Python.quant_agent.executor&quot;: &quot;Run&quot;,
+    &quot;Python.quick_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_backtest.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_converter.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_factor_mining.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.run_scrip_backtest.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_script_backtest.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.run_stock_query.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sample_data.executor&quot;: &quot;Run&quot;,
+    &quot;Python.simple_test (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.simple_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stock.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.stock_query_agent.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_agent_parsing.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_data_interface.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_deepseek_fix.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_factor_backtest_data.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_fallback_removal.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_import.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_imports.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_ma20_fix.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_modular_system.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_module_separation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_printing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_recent_strong_factors.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_refactored_system.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_robust_fetch.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_tushare_interface.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.verify_config.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.放量突破股票_20260219_213911.executor&quot;: &quot;Run&quot;,
+    &quot;Python.近日强势股票_低波动强势动量因子_20260220_221810.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.近日强势股票_强势股综合因子_20260215_222330.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.通信设备IT设备放量突破股_20260219_211440.executor&quot;: &quot;Run&quot;,
+    &quot;Python.通信设备与IT设备放量突破股_20260217_235712.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/code/QuantitativeSystem&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\code\QuantitativeSystem\data" />
+      <recent name="D:\code\QuantitativeSystem\agents\mcp" />
+      <recent name="D:\code\TradeAgent" />
+      <recent name="D:\code\TradeAgent\v2" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\code\QuantitativeSystem" />
+      <recent name="D:\code\QuantitativeSystem\data2parquet" />
+      <recent name="D:\code\QuantitativeSystem\factor_backtest_system" />
+      <recent name="D:\code\QuantitativeSystem\config" />
+      <recent name="D:\code\QuantitativeSystem\agents\core" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.run_scrip_backtest">
+    <configuration name="近日强势股票_低波动强势动量因子_20260220_221810" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_低波动强势动量因子_20260220_221810.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_factor_mining" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_scrip_backtest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/backtest" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_script_backtest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system/backtest" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_stock_query" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/run_stock_query.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.run_scrip_backtest" />
+        <item itemvalue="Python.近日强势股票_低波动强势动量因子_20260220_221810" />
+        <item itemvalue="Python.run_factor_mining" />
+        <item itemvalue="Python.run_stock_query" />
+        <item itemvalue="Python.run_script_backtest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6a65fb83-799f-488a-9e47-69186f138516" name="Changes" comment="" />
+      <created>1769271365216</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1769271365216</updated>
+      <workItem from="1769271366352" duration="5041000" />
+      <workItem from="1769436917658" duration="17000" />
+      <workItem from="1769875931863" duration="13388000" />
+      <workItem from="1770001489779" duration="11821000" />
+      <workItem from="1770086432735" duration="5323000" />
+      <workItem from="1770125685685" duration="5112000" />
+      <workItem from="1770172827313" duration="607000" />
+      <workItem from="1770173642828" duration="41836000" />
+      <workItem from="1770346170006" duration="19740000" />
+      <workItem from="1770555862511" duration="374000" />
+      <workItem from="1770556257124" duration="3478000" />
+      <workItem from="1770610908621" duration="6326000" />
+      <workItem from="1770622742971" duration="19446000" />
+      <workItem from="1770709676001" duration="6000" />
+      <workItem from="1770719230952" duration="12557000" />
+      <workItem from="1770799151607" duration="3103000" />
+      <workItem from="1770866078253" duration="21249000" />
+      <workItem from="1771073431485" duration="36098000" />
+      <workItem from="1771500883144" duration="4290000" />
+      <workItem from="1771505243759" duration="5993000" />
+      <workItem from="1771513064603" duration="498000" />
+      <workItem from="1771596052955" duration="4090000" />
+      <workItem from="1771771460366" duration="34000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/.dusbin/ai_factor_mining_api.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/.dusbin/intelligent_factor_mining.py</url>
+          <line>236</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/.dusbin/ai_factor_mining_api.py</url>
+          <line>492</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/.dusbin/ai_factor_mining_api.py</url>
+          <line>470</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/.dusbin/factor_mining_framework.py</url>
+          <line>256</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/.dusbin/factor_mining_framework.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/quant_agent.py</url>
+          <line>322</line>
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_mining_agent.py</url>
+          <line>107</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/quant_agent.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/quant_agent.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_mining_agent.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_mining_agent.py</url>
+          <line>106</line>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data2parquet/data_interface.py</url>
+          <line>119</line>
+          <option name="timeStamp" value="208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data2parquet/data_fetcher.py</url>
+          <line>73</line>
+          <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data2parquet/data_fetcher.py</url>
+          <line>163</line>
+          <option name="timeStamp" value="236" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data2parquet/data_interface.py</url>
+          <line>221</line>
+          <option name="timeStamp" value="253" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_generator.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="266" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_mining_pipeline.py</url>
+          <line>136</line>
+          <option name="timeStamp" value="279" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_mining_pipeline.py</url>
+          <line>176</line>
+          <option name="timeStamp" value="282" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/mcp/tool_implementations.py</url>
+          <line>604</line>
+          <option name="timeStamp" value="296" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_mining_pipeline.py</url>
+          <line>283</line>
+          <option name="timeStamp" value="304" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_generator.py</url>
+          <line>150</line>
+          <option name="timeStamp" value="306" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main/factor_scripts/近日强势股票_强势股综合因子_20260212_123743.py</url>
+          <line>10</line>
+          <option name="timeStamp" value="307" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main/main.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="308" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/agent/factor_script_generator.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="309" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/agent/stock_query_agent.py</url>
+          <line>60</line>
+          <option name="timeStamp" value="318" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/prompt/stock_query_config.py</url>
+          <line>5</line>
+          <option name="timeStamp" value="320" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
+          <line>283</line>
+          <option name="timeStamp" value="326" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
+          <line>424</line>
+          <option name="timeStamp" value="333" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
+          <line>106</line>
+          <option name="timeStamp" value="340" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
+          <line>102</line>
+          <option name="timeStamp" value="342" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
+          <line>122</line>
+          <option name="timeStamp" value="343" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
+          <line>365</line>
+          <option name="timeStamp" value="344" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
+          <line>194</line>
+          <option name="timeStamp" value="362" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/tools/stock_screener.py</url>
+          <line>447</line>
+          <option name="timeStamp" value="374" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py</url>
+          <line>573</line>
+          <option name="timeStamp" value="375" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py</url>
+          <line>612</line>
+          <option name="timeStamp" value="392" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/mcp/tools_selection.py</url>
+          <line>303</line>
+          <option name="timeStamp" value="429" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/mcp/tools_selection.py</url>
+          <line>190</line>
+          <option name="timeStamp" value="430" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py</url>
+          <line>420</line>
+          <option name="timeStamp" value="446" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py</url>
+          <line>446</line>
+          <option name="timeStamp" value="447" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/backtest/asking_script_loader.py</url>
+          <line>151</line>
+          <option name="timeStamp" value="453" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/tools/stock_screener.py</url>
+          <line>348</line>
+          <option name="timeStamp" value="454" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock_asking_system/tools/stock_screener.py</url>
+          <line>520</line>
+          <option name="timeStamp" value="455" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py</url>
+          <line>351</line>
+          <option name="timeStamp" value="456" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py</url>
+          <line>197</line>
+          <option name="timeStamp" value="459" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py</url>
+          <line>194</line>
+          <option name="timeStamp" value="460" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
+          <line>349</line>
+          <option name="timeStamp" value="463" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
+          <line>352</line>
+          <option name="timeStamp" value="464" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
+          <line>351</line>
+          <option name="timeStamp" value="465" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py</url>
+          <line>192</line>
+          <option name="timeStamp" value="467" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
+          <line>305</line>
+          <option name="timeStamp" value="468" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/mcp/tool_implementations.py</url>
+          <line>101</line>
+          <option name="timeStamp" value="481" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/mcp/tool_implementations.py</url>
+          <line>97</line>
+          <option name="timeStamp" value="482" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
+          <line>249</line>
+          <option name="timeStamp" value="483" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_module_separation.coverage" NAME="test_module_separation Coverage Results" MODIFIED="1770191005021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TradeAgent$agent_factor_mining.coverage" NAME="agent_factor_mining Coverage Results" MODIFIED="1769964128729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$quick_test.coverage" NAME="quick_test Coverage Results" MODIFIED="1770624705227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$run_factor_mining.coverage" NAME="run_factor_mining Coverage Results" MODIFIED="1771600879828" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/factor_backtest_system" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_refactored_system.coverage" NAME="test_refactored_system Coverage Results" MODIFIED="1770131402101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/TradeAgent$ai_factor_mining.coverage" NAME="ai_factor_mining Coverage Results" MODIFIED="1769961957156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1770879961265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_asking_system" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_factor_backtest_data.coverage" NAME="test_factor_backtest_data Coverage Results" MODIFIED="1770612270247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$agent_factor_mining__1_.coverage" NAME="agent_factor_mining (1) Coverage Results" MODIFIED="1770205461224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$__20260215_222330.coverage" NAME="近日强势股票_强势股综合因子_20260215_222330 Coverage Results" MODIFIED="1771165719297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/factor_backtest_system/factor_scripts" />
+    <SUITE FILE_PATH="coverage/Quantitative_System$test_refactored_system.coverage" NAME="test_refactored_system Coverage Results" MODIFIED="1770094112781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TradeAgent$pdf_converter.coverage" NAME="pdf_converter Coverage Results" MODIFIED="1769272157161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TradeAgent$generate_pdf.coverage" NAME="generate_pdf Coverage Results" MODIFIED="1769350258666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$daily_cron.coverage" NAME="daily_cron Coverage Results" MODIFIED="1770362651340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/TradeAgent$test_printing.coverage" NAME="test_printing Coverage Results" MODIFIED="1769350279015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TradeAgent$run_converter.coverage" NAME="run_converter Coverage Results" MODIFIED="1769271573614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$data_downloader.coverage" NAME="data_downloader Coverage Results" MODIFIED="1770626624997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$diagnose_industry.coverage" NAME="diagnose_industry Coverage Results" MODIFIED="1771076360218" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_tushare_interface.coverage" NAME="test_tushare_interface Coverage Results" MODIFIED="1770362796822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$simple_test__1_.coverage" NAME="simple_test (1) Coverage Results" MODIFIED="1770193185946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/agents/mcp" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$stock_query_agent.coverage" NAME="stock_query_agent Coverage Results" MODIFIED="1770879863721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_asking_system" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_robust_fetch.coverage" NAME="test_robust_fetch Coverage Results" MODIFIED="1770353464489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$data_interface_tushare.coverage" NAME="data_interface_tushare Coverage Results" MODIFIED="1770373781279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$factor_backtest_manager.coverage" NAME="factor_backtest_manager Coverage Results" MODIFIED="1770558167489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$direct_test_categorize.coverage" NAME="direct_test_categorize Coverage Results" MODIFIED="1770125989344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_recent_strong_factors.coverage" NAME="test_recent_strong_factors Coverage Results" MODIFIED="1770205033821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$data_interface.coverage" NAME="data_interface Coverage Results" MODIFIED="1770866317598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dataloader" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$run_backtest.coverage" NAME="run_scrip_backtest Coverage Results" MODIFIED="1771316684429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/factor_backtest_system/factor_scripts" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$factor_mining_agent.coverage" NAME="factor_mining_agent Coverage Results" MODIFIED="1770201333229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/agents/mcp" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$_20260219_213911.coverage" NAME="放量突破股票_20260219_213911 Coverage Results" MODIFIED="1771508421397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$agent_factor_mining__2_.coverage" NAME="agent_factor_mining (2) Coverage Results" MODIFIED="1770261575819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core/agent" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$IT_20260219_211440.coverage" NAME="通信设备IT设备放量突破股_20260219_211440 Coverage Results" MODIFIED="1771507562739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$factor_mining_pipeline.coverage" NAME="factor_mining_pipeline Coverage Results" MODIFIED="1771317776631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/factor_backtest_system/pipeline" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$run_scrip_backtest.coverage" NAME="run_scrip_backtest Coverage Results" MODIFIED="1771600990598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/factor_backtest_system/backtest" />
+    <SUITE FILE_PATH="coverage/Quantitative_System$agent_factor_mining.coverage" NAME="agent_factor_mining Coverage Results" MODIFIED="1770094587444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$simple_test.coverage" NAME="simple_test Coverage Results" MODIFIED="1770202642006" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$__20260220_221810.coverage" NAME="近日强势股票_低波动强势动量因子_20260220_221810 Coverage Results" MODIFIED="1771600937893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/factor_backtest_system/factor_scripts" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$stock.coverage" NAME="stock Coverage Results" MODIFIED="1770346360571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_data_interface.coverage" NAME="test_data_interface Coverage Results" MODIFIED="1770352833936" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$sample_data.coverage" NAME="sample_data Coverage Results" MODIFIED="1770352460972" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/TradeAgent$test_deepseek_fix.coverage" NAME="test_deepseek_fix Coverage Results" MODIFIED="1769963713540" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$factor_mining_framework.coverage" NAME="factor_mining_framework Coverage Results" MODIFIED="1770132386785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/frameworks/mining" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_import.coverage" NAME="test_import Coverage Results" MODIFIED="1770125925549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$check_python.coverage" NAME="check_python Coverage Results" MODIFIED="1770125970473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$verify_config.coverage" NAME="verify_config Coverage Results" MODIFIED="1770626173048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$run_stock_query.coverage" NAME="run_stock_query Coverage Results" MODIFIED="1771596082875" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_asking_system" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_app.coverage" NAME="test_app Coverage Results" MODIFIED="1770289195618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_agent_parsing.coverage" NAME="test_agent_parsing Coverage Results" MODIFIED="1770203524171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$ai_factor_mining.coverage" NAME="ai_factor_mining Coverage Results" MODIFIED="1770274055623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core/agent" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$data_generator.coverage" NAME="data_generator Coverage Results" MODIFIED="1771076462931" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dataloader" />
+    <SUITE FILE_PATH="coverage/Quantitative_System$ai_factor_mining.coverage" NAME="ai_factor_mining Coverage Results" MODIFIED="1770023271467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TradeAgent$ai_factor_mining_api__1_.coverage" NAME="ai_factor_mining_api (1) Coverage Results" MODIFIED="1769934911055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/v1" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$run_script_backtest.coverage" NAME="run_script_backtest Coverage Results" MODIFIED="1771509407552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_asking_system/backtest" />
+    <SUITE FILE_PATH="coverage/Quantitative_System$debug_deepseek.coverage" NAME="debug_deepseek Coverage Results" MODIFIED="1770018441542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$a_stock_market_fetcher_batch.coverage" NAME="a_stock_market_fetcher_batch Coverage Results" MODIFIED="1770353366789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$main.coverage" NAME="main Coverage Results" MODIFIED="1770870948201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$data_downloader__1_.coverage" NAME="data_downloader (1) Coverage Results" MODIFIED="1770633944566" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dataloader" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_ma20_fix.coverage" NAME="test_ma20_fix Coverage Results" MODIFIED="1770205354269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_fallback_removal.coverage" NAME="test_fallback_removal Coverage Results" MODIFIED="1770192316986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$data_reader_example.coverage" NAME="data_reader_example Coverage Results" MODIFIED="1770362785988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$agent_factor_mining.coverage" NAME="agent_factor_mining Coverage Results" MODIFIED="1770276047758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core/agent" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_modular_system.coverage" NAME="test_modular_system Coverage Results" MODIFIED="1770126167324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$factor_mining_agent__1_.coverage" NAME="factor_mining_agent (1) Coverage Results" MODIFIED="1770195597785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/agents/mcp" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$test_imports.coverage" NAME="test_imports Coverage Results" MODIFIED="1770206506575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TradeAgent$ai_factor_mining_api.coverage" NAME="ai_factor_mining_api Coverage Results" MODIFIED="1769930782739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$quant_agent.coverage" NAME="quant_agent Coverage Results" MODIFIED="1770195630638" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/agents/core" />
+    <SUITE FILE_PATH="coverage/QuantitativeSystem$IT_20260217_235712.coverage" NAME="通信设备与IT设备放量突破股_20260217_235712 Coverage Results" MODIFIED="1771343852972" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
+  </component>
+</project>

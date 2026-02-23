@@ -1,0 +1,7 @@
+venv
+__pycache__/
+*.csv
+*.json
+*.parquet
+*.egg-info/
+.env
