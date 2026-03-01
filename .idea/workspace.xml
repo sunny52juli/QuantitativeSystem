@@ -76,7 +76,7 @@
     "Python.quick_test.executor": "Run",
     "Python.run_backtest.executor": "Run",
     "Python.run_converter.executor": "Run",
-    "Python.run_factor_mining.executor": "Debug",
+    "Python.run_factor_mining.executor": "Run",
     "Python.run_scrip_backtest.executor": "Run",
     "Python.run_script_backtest.executor": "Debug",
     "Python.run_stock_query.executor": "Run",
@@ -139,7 +139,7 @@
       <recent name="D:\code\QuantitativeSystem\agents\core" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.放量突破股票_20260301_205100">
+  <component name="RunManager" selected="Python.run_factor_mining">
     <configuration name="放量突破股票_20260219_213911" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
@@ -209,7 +209,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="run_scrip_backtest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="run_factor_mining" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -218,13 +218,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/backtest" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -259,11 +258,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.run_factor_mining" />
         <item itemvalue="Python.放量突破股票_20260301_205100" />
         <item itemvalue="Python.run_stock_query" />
         <item itemvalue="Python.放量突破股票_20260219_213911" />
         <item itemvalue="Python.data_generator" />
-        <item itemvalue="Python.run_scrip_backtest" />
       </list>
     </recent_temporary>
   </component>

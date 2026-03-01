@@ -59,7 +59,7 @@ except ImportError:
     if str(_project_root) not in sys.path:
         sys.path.insert(0, str(_project_root))
 
-from dataloader.data_interface import DataInterface
+from data2parquet.data_interface import DataInterface
 from config import FactorBacktestConfig as FactorConfig
 from config.data_fields import FIELD_MAPPING, FUNCTION_MAPPING
 
