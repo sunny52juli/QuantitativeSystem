@@ -42,87 +42,88 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.a_stock_market_fetcher_batch.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.agent_factor_mining (1).executor&quot;: &quot;Debug&quot;,
-    &quot;Python.agent_factor_mining (2).executor&quot;: &quot;Run&quot;,
-    &quot;Python.agent_factor_mining.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ai_factor_mining.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ai_factor_mining_api (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.ai_factor_mining_api.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.check_python.executor&quot;: &quot;Run&quot;,
-    &quot;Python.daily_cron.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.data_downloader (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_downloader.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.data_generator.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_interface.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.data_interface_tushare.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.data_reader_example.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.debug_deepseek.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.diagnose_industry.executor&quot;: &quot;Run&quot;,
-    &quot;Python.direct_test_categorize.executor&quot;: &quot;Run&quot;,
-    &quot;Python.factor_backtest_manager.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.factor_mining_agent (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.factor_mining_agent.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.factor_mining_framework.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.factor_mining_pipeline.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_pdf.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.main (1).executor&quot;: &quot;Debug&quot;,
-    &quot;Python.main.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.pdf_converter.executor&quot;: &quot;Run&quot;,
-    &quot;Python.quant_agent.executor&quot;: &quot;Run&quot;,
-    &quot;Python.quick_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_backtest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_converter.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_factor_mining.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.run_scrip_backtest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_script_backtest.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.run_stock_query.executor&quot;: &quot;Run&quot;,
-    &quot;Python.sample_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.simple_test (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.simple_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.stock.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.stock_query_agent.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_agent_parsing.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_data_interface.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_deepseek_fix.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_factor_backtest_data.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_fallback_removal.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_import.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_imports.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_ma20_fix.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_modular_system.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_module_separation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_printing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_recent_strong_factors.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_refactored_system.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_robust_fetch.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_tushare_interface.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.verify_config.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.放量突破股票_20260219_213911.executor&quot;: &quot;Run&quot;,
-    &quot;Python.近日强势股票_低波动强势动量因子_20260220_221810.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.近日强势股票_强势股综合因子_20260215_222330.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.通信设备IT设备放量突破股_20260219_211440.executor&quot;: &quot;Run&quot;,
-    &quot;Python.通信设备与IT设备放量突破股_20260217_235712.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/code/QuantitativeSystem&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.a_stock_market_fetcher_batch.executor": "Debug",
+    "Python.agent_factor_mining (1).executor": "Debug",
+    "Python.agent_factor_mining (2).executor": "Run",
+    "Python.agent_factor_mining.executor": "Run",
+    "Python.ai_factor_mining.executor": "Run",
+    "Python.ai_factor_mining_api (1).executor": "Run",
+    "Python.ai_factor_mining_api.executor": "Debug",
+    "Python.check_python.executor": "Run",
+    "Python.daily_cron.executor": "Debug",
+    "Python.data_downloader (1).executor": "Run",
+    "Python.data_downloader.executor": "Debug",
+    "Python.data_generator.executor": "Run",
+    "Python.data_interface.executor": "Debug",
+    "Python.data_interface_tushare.executor": "Debug",
+    "Python.data_reader_example.executor": "Debug",
+    "Python.debug_deepseek.executor": "Debug",
+    "Python.diagnose_industry.executor": "Run",
+    "Python.direct_test_categorize.executor": "Run",
+    "Python.factor_backtest_manager.executor": "Debug",
+    "Python.factor_mining_agent (1).executor": "Run",
+    "Python.factor_mining_agent.executor": "Debug",
+    "Python.factor_mining_framework.executor": "Debug",
+    "Python.factor_mining_pipeline.executor": "Run",
+    "Python.generate_pdf.executor": "Debug",
+    "Python.main (1).executor": "Debug",
+    "Python.main.executor": "Debug",
+    "Python.pdf_converter.executor": "Run",
+    "Python.quant_agent.executor": "Run",
+    "Python.quick_test.executor": "Run",
+    "Python.run_backtest.executor": "Run",
+    "Python.run_converter.executor": "Run",
+    "Python.run_factor_mining.executor": "Debug",
+    "Python.run_scrip_backtest.executor": "Run",
+    "Python.run_script_backtest.executor": "Debug",
+    "Python.run_stock_query.executor": "Run",
+    "Python.sample_data.executor": "Run",
+    "Python.simple_test (1).executor": "Run",
+    "Python.simple_test.executor": "Run",
+    "Python.stock.executor": "Debug",
+    "Python.stock_query_agent.executor": "Debug",
+    "Python.test_agent_parsing.executor": "Debug",
+    "Python.test_app.executor": "Run",
+    "Python.test_data_interface.executor": "Debug",
+    "Python.test_deepseek_fix.executor": "Debug",
+    "Python.test_factor_backtest_data.executor": "Debug",
+    "Python.test_fallback_removal.executor": "Debug",
+    "Python.test_import.executor": "Run",
+    "Python.test_imports.executor": "Run",
+    "Python.test_ma20_fix.executor": "Debug",
+    "Python.test_modular_system.executor": "Run",
+    "Python.test_module_separation.executor": "Run",
+    "Python.test_printing.executor": "Run",
+    "Python.test_recent_strong_factors.executor": "Debug",
+    "Python.test_refactored_system.executor": "Debug",
+    "Python.test_robust_fetch.executor": "Run",
+    "Python.test_tushare_interface.executor": "Debug",
+    "Python.verify_config.executor": "Debug",
+    "Python.放量突破股票_20260219_213911.executor": "Run",
+    "Python.放量突破股票_20260301_205100.executor": "Run",
+    "Python.近日强势股票_低波动强势动量因子_20260220_221810.executor": "Debug",
+    "Python.近日强势股票_强势股综合因子_20260215_222330.executor": "Debug",
+    "Python.通信设备IT设备放量突破股_20260219_211440.executor": "Run",
+    "Python.通信设备与IT设备放量突破股_20260217_235712.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/code/QuantitativeSystem",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\code\QuantitativeSystem\data" />
@@ -138,8 +139,8 @@
       <recent name="D:\code\QuantitativeSystem\agents\core" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.run_scrip_backtest">
-    <configuration name="近日强势股票_低波动强势动量因子_20260220_221810" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.放量突破股票_20260301_205100">
+    <configuration name="放量突破股票_20260219_213911" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -148,13 +149,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_低波动强势动量因子_20260220_221810.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260219_213911.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -163,7 +163,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="run_factor_mining" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="放量突破股票_20260301_205100" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,13 +172,35 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260301_205100.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data2parquet" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data2parquet/data_generator.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -203,30 +225,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="run_script_backtest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="TradeAgent" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system/backtest" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -261,11 +259,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.run_scrip_backtest" />
-        <item itemvalue="Python.近日强势股票_低波动强势动量因子_20260220_221810" />
-        <item itemvalue="Python.run_factor_mining" />
+        <item itemvalue="Python.放量突破股票_20260301_205100" />
         <item itemvalue="Python.run_stock_query" />
-        <item itemvalue="Python.run_script_backtest" />
+        <item itemvalue="Python.放量突破股票_20260219_213911" />
+        <item itemvalue="Python.data_generator" />
+        <item itemvalue="Python.run_scrip_backtest" />
       </list>
     </recent_temporary>
   </component>

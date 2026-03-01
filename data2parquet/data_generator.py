@@ -14,9 +14,9 @@ import argparse
 project_root = PathLib(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from dataloader.data_fetcher import DataFetcher
-from dataloader.data_saver import DataSaver
-from dataloader.trade_calendar import TradeCalendar
+from data2parquet.data_fetcher import DataFetcher
+from data2parquet.data_saver import DataSaver
+from data2parquet.trade_calendar import TradeCalendar
 from config.data_path import DataConfig
 import tushare as ts
 

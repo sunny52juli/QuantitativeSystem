@@ -113,7 +113,7 @@ class StockDataLoader(BaseDataLoader):
         print("📊 正在加载市场数据...")
         
         # 导入数据接口
-        from dataloader.data_interface import DataInterface
+        from data2parquet.data_interface import DataInterface
         data_interface = DataInterface()
         
         # 1. 获取股票池
@@ -192,7 +192,7 @@ class StockDataLoader(BaseDataLoader):
         Returns:
             (start_date, end_date) 元组
         """
-        from dataloader.trade_calendar import TradeCalendar
+        from data2parquet.trade_calendar import TradeCalendar
         import tushare as ts
         
         # 创建 Tushare Pro API 实例

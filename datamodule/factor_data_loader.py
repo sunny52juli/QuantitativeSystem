@@ -15,7 +15,7 @@
 
 import pandas as pd
 from typing import Dict, List, Optional
-from dataloader.data_interface import DataInterface
+from data2parquet.data_interface import DataInterface
 from config import FactorBacktestConfig
 from datamodule.base_loader import BaseDataLoader
 from core.exceptions import DataLoadError, StockPoolError
