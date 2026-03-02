@@ -97,7 +97,7 @@ def _apply_grouped_operation(data: pd.DataFrame, field_data: pd.Series, operatio
             ts_code_key = _get_groupby_key(data, 'ts_code')
             result = operation(field_data.groupby(ts_code_key))
         else:
-            result = operation(field_data)
+            raise ValueError("按股票分组的操作无法在单索引数据中执行")
         result.index = data.index
         return result
     
@@ -627,69 +627,134 @@ def kurtosis(data: pd.DataFrame, values: str, window: int = 20, computed_vars: D
 # 时间序列工具
 # ============================================================================
 
+
+def _use_numba() -> bool:
+    """检查是否可以使用 numba 加速"""
+    try:
+        import numba
+        return True
+    except ImportError:
+        return False
+
+
 def ts_rank(data: pd.DataFrame, values: str, window: int = 10, computed_vars: Dict = None) -> pd.Series:
-    """时间序列排名"""
+    """时间序列排名（优化版）"""
     field_data = _get_field(data, values, computed_vars)
     
-    def calc_ts_rank_series(x):
-        return x.rolling(window).apply(lambda y: pd.Series(y).rank().iloc[-1] / len(y) if len(y) > 0 else np.nan, raw=False)
+    def calc_ts_rank_optimized(x):
+        """优化的时间序列排名计算"""
+        # 使用 numpy 数组避免 Series 开销
+        values_array = x.values if hasattr(x, 'values') else np.asarray(x)
+        n = len(values_array)
+        
+        if n < window:
+            return pd.Series(np.nan, index=x.index if hasattr(x, 'index') else range(n))
+        
+        # 预分配结果数组
+        result = np.full(n, np.nan)
+        
+        # 向量化计算
+        for i in range(window - 1, n):
+            # 获取当前窗口的数据
+            window_data = values_array[i - window + 1:i + 1]
+            
+            # 计算当前值在窗口中的排名百分位
+            current_value = window_data[-1]
+            rank_pct = (np.sum(window_data < current_value) + 0.5 * np.sum(window_data == current_value)) / window
+            
+            result[i] = rank_pct
+        
+        return pd.Series(result, index=x.index if hasattr(x, 'index') else range(n))
     
-    def calc_ts_rank(x):
+    def calc_ts_rank_wrapper(x):
+        """包装器以支持不同的输入类型"""
         if hasattr(x, 'transform'):
-            return x.transform(calc_ts_rank_series)
+            # GroupBy 对象，使用 transform
+            return x.transform(calc_ts_rank_optimized, engine='numba' if _use_numba() else None)
         else:
-            return calc_ts_rank_series(x)
+            # 普通 Series，直接计算
+            return calc_ts_rank_optimized(x)
     
-    return _apply_grouped_operation(data, field_data, calc_ts_rank)
+    return _apply_grouped_operation(data, field_data, calc_ts_rank_wrapper)
 
 
 def ts_argmax(data: pd.DataFrame, values: str, window: int = 10, computed_vars: Dict = None) -> pd.Series:
-    """时间序列最大值位置"""
+    """时间序列最大值位置（优化版）"""
     field_data = _get_field(data, values, computed_vars)
     
-    def calc_ts_argmax_series(x):
-        return x.rolling(window).apply(lambda y: window - 1 - np.argmax(y) if len(y) > 0 else np.nan, raw=True)
+    def calc_ts_argmax_optimized(x):
+        """优化的 argmax 计算"""
+        values_array = x.values if hasattr(x, 'values') else np.asarray(x)
+        n = len(values_array)
+        result = np.full(n, np.nan)
+        
+        for i in range(window - 1, n):
+            window_data = values_array[i - window + 1:i + 1]
+            result[i] = window - 1 - np.argmax(window_data)
+        
+        return pd.Series(result, index=x.index if hasattr(x, 'index') else range(n))
     
-    def calc_ts_argmax(x):
+    def calc_ts_argmax_wrapper(x):
         if hasattr(x, 'transform'):
-            return x.transform(calc_ts_argmax_series)
+            return x.transform(calc_ts_argmax_optimized)
         else:
-            return calc_ts_argmax_series(x)
+            return calc_ts_argmax_optimized(x)
     
-    return _apply_grouped_operation(data, field_data, calc_ts_argmax)
+    return _apply_grouped_operation(data, field_data, calc_ts_argmax_wrapper)
 
 
 def ts_argmin(data: pd.DataFrame, values: str, window: int = 10, computed_vars: Dict = None) -> pd.Series:
-    """时间序列最小值位置"""
+    """时间序列最小值位置（优化版）"""
     field_data = _get_field(data, values, computed_vars)
     
-    def calc_ts_argmin_series(x):
-        return x.rolling(window).apply(lambda y: window - 1 - np.argmin(y) if len(y) > 0 else np.nan, raw=True)
+    def calc_ts_argmin_optimized(x):
+        """优化的 argmin 计算"""
+        values_array = x.values if hasattr(x, 'values') else np.asarray(x)
+        n = len(values_array)
+        result = np.full(n, np.nan)
+        
+        for i in range(window - 1, n):
+            window_data = values_array[i - window + 1:i + 1]
+            result[i] = window - 1 - np.argmin(window_data)
+        
+        return pd.Series(result, index=x.index if hasattr(x, 'index') else range(n))
     
-    def calc_ts_argmin(x):
+    def calc_ts_argmin_wrapper(x):
         if hasattr(x, 'transform'):
-            return x.transform(calc_ts_argmin_series)
+            return x.transform(calc_ts_argmin_optimized)
         else:
-            return calc_ts_argmin_series(x)
+            return calc_ts_argmin_optimized(x)
     
-    return _apply_grouped_operation(data, field_data, calc_ts_argmin)
+    return _apply_grouped_operation(data, field_data, calc_ts_argmin_wrapper)
 
 
 def decay_linear(data: pd.DataFrame, values: str, window: int = 10, computed_vars: Dict = None) -> pd.Series:
-    """线性衰减加权平均"""
+    """线性衰减加权平均（优化版）"""
     field_data = _get_field(data, values, computed_vars)
     
-    def calc_decay_linear_series(x):
-        weights = np.arange(1, window + 1)
-        return x.rolling(window).apply(lambda y: np.average(y, weights=weights[:len(y)]) if len(y) > 0 else np.nan, raw=True)
+    # 预计算权重
+    weights = np.arange(1, window + 1, dtype=np.float64)
     
-    def calc_decay_linear(x):
+    def calc_decay_linear_optimized(x):
+        """优化的线性衰减加权计算"""
+        values_array = x.values if hasattr(x, 'values') else np.asarray(x)
+        n = len(values_array)
+        result = np.full(n, np.nan)
+        
+        for i in range(window - 1, n):
+            window_data = values_array[i - window + 1:i + 1]
+            current_weights = weights[:len(window_data)]
+            result[i] = np.average(window_data, weights=current_weights)
+        
+        return pd.Series(result, index=x.index if hasattr(x, 'index') else range(n))
+    
+    def calc_decay_linear_wrapper(x):
         if hasattr(x, 'transform'):
-            return x.transform(calc_decay_linear_series)
+            return x.transform(calc_decay_linear_optimized)
         else:
-            return calc_decay_linear_series(x)
+            return calc_decay_linear_optimized(x)
     
-    return _apply_grouped_operation(data, field_data, calc_decay_linear)
+    return _apply_grouped_operation(data, field_data, calc_decay_linear_wrapper)
 
 
 def volatility(data: pd.DataFrame, values: str, window: int = 20, computed_vars: Dict = None) -> pd.Series:

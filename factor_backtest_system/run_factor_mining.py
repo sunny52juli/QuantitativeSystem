@@ -20,10 +20,14 @@ import sys
 import os
 import io
 
-# 设置 Windows 终端 UTF-8 编码
+# 设置 Windows 终端 UTF-8 编码并禁用缓冲
 if sys.platform == 'win32':
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+    # 禁用 stdout 缓冲并设置 UTF-8 编码
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    # 强制刷新缓冲区
+    sys.stdout.flush()
+    sys.stderr.flush()
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -62,7 +66,7 @@ __all__ = [
 # ==================== 辅助函数 ====================
 
 
-def run_factor_mining(strategy: str, strategy_name: str, n_factors: int, api_key: str, data=None):
+def run_factor_mining(strategy: str, strategy_name: str, n_factors: int, api_key: str, data=None, use_llm_optimization=True):
     """
     运行因子挖掘流程（新工作流）
     
@@ -78,6 +82,9 @@ def run_factor_mining(strategy: str, strategy_name: str, n_factors: int, api_key
         api_key: API密钥
         data: 预加载的数据DataFrame，如果为None则由Agent自动加载
     """
+    # 强制刷新输出缓冲区
+    sys.stdout.flush()
+    
     print("\n" + "="*80)
     print(f"🚀 启动因子挖掘系统（模块化架构）")
     print("="*80)
@@ -90,6 +97,9 @@ def run_factor_mining(strategy: str, strategy_name: str, n_factors: int, api_key
     print("   3️⃣ datamodule/ - 加载数据并执行回测")
     print("="*80)
     
+    # 立即刷新输出
+    sys.stdout.flush()
+    
     # 创建因子挖掘器（传入预加载的数据，避免重复加载）
     miner = create_factor_miner(data=data, api_key=api_key)
     
@@ -99,7 +109,7 @@ def run_factor_mining(strategy: str, strategy_name: str, n_factors: int, api_key
         n_factors=n_factors,
         strategy_name=strategy_name
     )
-    
+        
     if result:
         print("\n" + "="*80)
         print("🎉 因子挖掘完成！")

@@ -16,25 +16,12 @@
 3. 使用 FactorScriptExecutor 执行因子计算和回测
 """
 
-# 从 agent 模块导入 LLM Agent 相关
-from .agent import AIFactorMiner, FactorMiningAgent
-
-# 从 tools 模块导入工具相关
+# 从核心模块导入主要功能
+from .agent import FactorMiningAgent
 from .tools import ToolExecutor, sanitize_filename, to_class_name
-
-# 从 backtest 模块导入脚本加载相关
 from .backtest.factor_loader import FactorScriptLoader, FactorScriptExecutor
-
-# 从 datamodule 模块导入数据加载相关
-from datamodule import FactorDataLoader
-
-# 从 backtest 模块导入回测框架
 from .backtest.factor_backtest import FactorMiningFramework
-
-# 从 generators 模块导入脚本生成器
 from .generators.factor_script_generator import FactorScriptGenerator
-
-# 从 pipeline 模块导入便捷函数
 from .pipeline.factor_mining_pipeline import (
     StrategyTemplates,
     create_factor_miner,
@@ -44,24 +31,21 @@ from .pipeline.factor_mining_pipeline import (
     generate_optimization_suggestions,
 )
 
-# 从 backtest 模块导入回测入口
-from .backtest.run_scrip_backtest import backtest_factor_scripts
+# 从外部模块导入数据加载器
+from datamodule import FactorDataLoader
 
 __all__ = [
-    # 回测引擎
+    # 核心功能
     'FactorMiningFramework',
-    
-    # Agent 模块 - LLM 相关
-    'AIFactorMiner',
-    'ToolExecutor',
     'FactorMiningAgent',
+    'ToolExecutor',
     
-    # Datamodule 模块 - 数据加载相关
+    # 数据处理
     'FactorScriptLoader',
     'FactorScriptExecutor',
     'FactorDataLoader',
     
-    # 脚本生成器
+    # 脚本生成
     'FactorScriptGenerator',
     
     # 便捷函数
@@ -71,5 +55,4 @@ __all__ = [
     'select_tools_for_strategy',
     'generate_recent_strong_stock_factors',
     'generate_optimization_suggestions',
-    'backtest_factor_scripts',
 ]

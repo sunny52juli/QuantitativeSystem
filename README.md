@@ -54,25 +54,33 @@
 
 ### 因子回测系统核心功能
 
-1. **AI因子生成**
+1. **AI 因子生成**（AIFactorMiner）
    - 基于策略描述自动生成量化因子
-   - 支持多种预定义策略模板
+   - 调用 LLM API 进行深度分析
    - 智能选择相关的技术指标和工具
+   - 支持工具调用链执行
 
-2. **因子脚本化**
-   - 将因子定义转换为可执行Python脚本
+2. **流程协调**（FactorMiningAgent）
+   - 管理数据加载和组件生命周期
+   - 协调整个因子挖掘流程
+   - 生成因子脚本文件
+   - 组织优化建议输出
+
+3. **因子脚本化**（FactorScriptGenerator）
+   - 将因子定义转换为可执行 Python 脚本
    - 脚本可独立运行，便于调试和复用
    - 自动保存到 `factor_scripts/` 目录
 
-3. **多维度回测**
-   - 支持多个持有期同时回测（1日、5日、20日等）
+4. **多维度回测**（FactorMiningFramework）
+   - 支持多个持有期同时回测（1 日、5 日、20 日等）
    - 计算年化收益率、夏普比率、最大回撤等指标
    - 分组回测，评估因子区分度
 
-4. **智能优化建议**
+5. **智能优化建议**
+   - **LLM 模式**（LLMFactorOptimizer）：基于大模型的深度优化分析
+   - **规则模式**（RuleBasedFactorOptimizer）：基于规则的降级方案
    - 分析因子表现并生成优化建议
    - 识别因子的优势和不足
-   - 提供改进方向
 
 ### 股票查询系统核心功能
 
@@ -105,10 +113,14 @@
 ```
 QuantitativeSystem/
 ├── factor_backtest_system/    # 因子回测系统
-│   ├── agent/                  # AI Agent（因子生成）
+│   ├── agent/                  # AI Agent 模块
+│   │   ├── ai_factor_agent.py  # LLM Agent（调用 API 生成因子）
+│   │   ├── mining_agent.py     # 流程协调代理
+│   │   ├── llm_optimizer.py    # LLM 优化器
+│   │   └── rule_based_optimizer.py  # 规则优化器（降级方案）
 │   ├── backtest/               # 回测引擎
 │   ├── generators/             # 脚本生成器
-│   ├── pipeline/               # 流程管道
+│   ├── pipeline/               # 流程管道（调用入口）
 │   ├── prompt/                 # 提示词配置
 │   ├── tools/                  # 工具函数
 │   ├── factor_scripts/         # 生成的因子脚本
@@ -125,7 +137,7 @@ QuantitativeSystem/
 │   └── run_stock_query.py      # 主入口
 │
 ├── core/                       # 核心功能模块
-│   ├── mcp/                    # MCP工具管理
+│   ├── mcp/                    # MCP 工具管理
 │   ├── skill/                  # 技能系统
 │   ├── base_messages.py        # 消息基类
 │   ├── exceptions.py           # 异常定义
@@ -145,7 +157,7 @@ QuantitativeSystem/
 │   └── data_saver.py           # 数据保存
 │
 ├── config/                     # 配置管理
-│   ├── api.py                  # API配置
+│   ├── api.py                  # API 配置
 │   ├── data_fields.py          # 数据字段定义
 │   ├── data_path.py            # 数据路径配置
 │   ├── factor_backtest_config.py  # 因子回测配置
@@ -163,19 +175,21 @@ QuantitativeSystem/
 ```
 用户输入策略描述
         ↓
-   AI Agent分析
+   FactorMiningAgent（流程协调）
+        ↓
+   AIFactorMiner（LLM Agent 调用 API）
         ↓
    生成因子定义
         ↓
-   生成因子脚本 → factor_scripts/
+   FactorScriptGenerator（生成脚本） → factor_scripts/
         ↓
    加载历史数据
         ↓
-   执行因子计算
+   FactorScriptExecutor（执行计算）
         ↓
    多持有期回测
         ↓
-   生成优化建议
+   LLMFactorOptimizer（可选：深度优化分析）
         ↓
    输出完整报告
 ```
@@ -517,7 +531,99 @@ class DataPathConfig:
 
 ## 🔧 模块详解
 
-### Core模块 (core/)
+### Factor Backtest System 模块 (factor_backtest_system/)
+
+**因子回测系统**，基于AI大模型的智能因子挖掘和回测平台。
+
+#### Agent 模块 (agent/)
+
+AI Agent 模块采用职责分离设计，包含以下组件：
+
+1. **AIFactorMiner** (`ai_factor_agent.py`)
+   - LLM Agent，负责调用 API 生成因子定义
+   - 执行工具调用链
+   - 计算因子值
+   - 执行回测
+   
+   ```python
+   from factor_backtest_system.agent import AIFactorMiner
+   
+   miner = AIFactorMiner(data=df, api_key=api_key)
+   factors = miner.generate_factors(strategy, n_factors=3)
+   backtest_result = miner.backtest_factor(factor_spec)
+   ```
+
+2. **FactorMiningAgent** (`mining_agent.py`)
+   - 流程协调代理，负责协调整个因子挖掘流程
+   - 管理数据加载和组件生命周期
+   - 生成因子脚本文件
+   - 组织优化建议输出
+   
+   ```python
+   from factor_backtest_system.agent import FactorMiningAgent
+   
+   agent = FactorMiningAgent(api_key=api_key)
+   result = agent.run_complete_pipeline(
+       strategy=strategy,
+       n_factors=3,
+       strategy_name="近日强势股票"
+   )
+   ```
+
+3. **LLMFactorOptimizer** (`llm_optimizer.py`)
+   - LLM 驱动的因子优化器
+   - 提供深度优化分析
+   - 生成代码修改建议
+   - 支持置信度评分
+   
+   ```python
+   from factor_backtest_system.agent import LLMFactorOptimizer
+   
+   optimizer = LLMFactorOptimizer(api_key=api_key)
+   optimization = optimizer.analyze_and_optimize_factor(
+       factor_definition=factor,
+       backtest_results=result
+   )
+   ```
+
+4. **RuleBasedFactorOptimizer** (`rule_based_optimizer.py`)
+   - 基于规则的因子优化器（降级方案）
+   - 当 LLM 不可用时的后备方案
+   - 基于预设规则生成优化建议
+
+#### Pipeline 模块 (pipeline/)
+
+流程管道模块，系统的调用入口：
+
+- **factor_mining_pipeline.py**: 提供便捷函数和预定义策略
+  - `create_factor_miner()`: 创建因子挖掘器实例
+  - `generate_recent_strong_stock_factors()`: 生成近日强势股票因子
+  - `StrategyTemplates`: 预定义策略模板
+
+#### Backtest 模块 (backtest/)
+
+回测引擎模块：
+
+- **factor_backtest.py**: 因子回测框架
+  - `FactorMiningFramework`: 回测执行类
+  - 多持有期回测
+  - 分组收益计算
+
+- **factor_loader.py**: 因子脚本加载和执行
+  - `FactorScriptLoader`: 加载因子脚本
+  - `FactorScriptExecutor`: 执行因子计算
+
+#### Generators 模块 (generators/)
+
+脚本生成器模块：
+
+- **factor_script_generator.py**: 将因子定义转换为可执行脚本
+  - 自动生成 Python 代码
+  - 保存到 `factor_scripts/` 目录
+
+---
+
+### Core 模块 (core/)
 
 **核心功能模块**，提供通用的工具和服务。
 
@@ -739,19 +845,47 @@ def calculate_custom_metric(returns: pd.Series) -> float:
 
 ## 📝 更新日志
 
+### v1.1.0 (2026-03-02)
+
+**架构重构 - Agent 模块职责分离**
+
+- ✅ **AIFactorMiner** 重构为真正的 LLM Agent
+  - 专注于调用 LLM API 生成因子定义
+  - 执行工具调用链
+  - 计算因子值和回测
+  
+- ✅ **FactorMiningAgent** 独立为流程协调代理
+  - 协调整个因子挖掘流程
+  - 管理数据加载和组件生命周期
+  - 生成因子脚本和优化建议
+  
+- ✅ **LLMFactorOptimizer** 优化器增强
+  - 支持深度优化分析
+  - 提供代码修改建议
+  - 置信度评分机制
+  
+- ✅ **Pipeline 模块**职责明确
+  - `factor_mining_pipeline.py` 作为调用入口
+  - 提供便捷函数和预定义策略
+  
+- ✅ **代码质量提升**
+  - 修复 KeyError 问题（`iteration_plan` 等字段的安全访问）
+  - 统一错误处理机制
+  - 改进日志输出
+
 ### v1.0.0 (2024-01-01)
 
 **初始版本发布**
 
 - ✅ 因子回测系统完整实现
 - ✅ 股票查询系统完整实现
-- ✅ MCP工具管理系统
+- ✅ MCP 工具管理系统
 - ✅ 数据加载和管理模块
 - ✅ 配置管理系统
 - ✅ 日志和异常处理系统
 
 **核心功能**:
-- AI驱动的因子生成
+- AI 驱动的因子生成
 - 多持有期回测
 - 自然语言股票查询
 - 筛选逻辑自动生成
@@ -782,7 +916,7 @@ def calculate_custom_metric(returns: pd.Series) -> float:
 如有问题或建议，请通过以下方式联系：
 
 - 提交 Issue
-- 发送邮件至: [your-email@example.com]
+- 发送邮件至: [houdd@mail.ustc.edu.cn]
 
 ---
 

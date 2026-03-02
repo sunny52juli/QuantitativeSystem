@@ -5,8 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a65fb83-799f-488a-9e47-69186f138516" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CopilotChatHistory.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CopilotChatHistory.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/factor_backtest_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/factor_backtest_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mcp/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mcp/expression_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/mcp/expression_tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mcp/tool_implementations.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/mcp/tool_implementations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datamodule/stock_data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/datamodule/stock_data_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/agent/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/agent/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/agent/factor_miner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_动量突破因子_20260301_211541.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_波动率调整的MACD动量_20260301_211541.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_量价强势RSI因子_20260301_211541.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/generators/factor_script_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/generators/factor_script_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/pipeline/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/pipeline/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/pipeline/factor_mining_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/pipeline/factor_mining_pipeline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/prompt/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/factor_prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/prompt/factor_prompts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +81,7 @@
     "Python.data_interface_tushare.executor": "Debug",
     "Python.data_reader_example.executor": "Debug",
     "Python.debug_deepseek.executor": "Debug",
+    "Python.demo_optimization.executor": "Run",
     "Python.diagnose_industry.executor": "Run",
     "Python.direct_test_categorize.executor": "Run",
     "Python.factor_backtest_manager.executor": "Debug",
@@ -71,6 +92,7 @@
     "Python.generate_pdf.executor": "Debug",
     "Python.main (1).executor": "Debug",
     "Python.main.executor": "Debug",
+    "Python.mining_agent.executor": "Debug",
     "Python.pdf_converter.executor": "Run",
     "Python.quant_agent.executor": "Run",
     "Python.quick_test.executor": "Run",
@@ -96,6 +118,7 @@
     "Python.test_ma20_fix.executor": "Debug",
     "Python.test_modular_system.executor": "Run",
     "Python.test_module_separation.executor": "Run",
+    "Python.test_optimization_agent.executor": "Run",
     "Python.test_printing.executor": "Run",
     "Python.test_recent_strong_factors.executor": "Debug",
     "Python.test_refactored_system.executor": "Debug",
@@ -106,6 +129,8 @@
     "Python.放量突破股票_20260301_205100.executor": "Run",
     "Python.近日强势股票_低波动强势动量因子_20260220_221810.executor": "Debug",
     "Python.近日强势股票_强势股综合因子_20260215_222330.executor": "Debug",
+    "Python.近日强势股票_强势股综合因子_20260302_221520.executor": "Debug",
+    "Python.近日强势股票_强势股综合因子_20260302_232303.executor": "Run",
     "Python.通信设备IT设备放量突破股_20260219_211440.executor": "Run",
     "Python.通信设备与IT设备放量突破股_20260217_235712.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -139,8 +164,8 @@
       <recent name="D:\code\QuantitativeSystem\agents\core" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.run_factor_mining">
-    <configuration name="放量突破股票_20260219_213911" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.run_stock_query">
+    <configuration name="近日强势股票_强势股综合因子_20260302_221520" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -149,12 +174,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260219_213911.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_强势股综合因子_20260302_221520.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -163,7 +188,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="放量突破股票_20260301_205100" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="近日强势股票_强势股综合因子_20260302_232303" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,12 +197,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260301_205100.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_强势股综合因子_20260302_232303.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -186,7 +211,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="data_generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="mining_agent" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -195,12 +220,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data2parquet" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/agent" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data2parquet/data_generator.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -245,7 +270,6 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/run_stock_query.py" />
       <option name="PARAMETERS" value="" />
@@ -258,11 +282,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.run_factor_mining" />
-        <item itemvalue="Python.放量突破股票_20260301_205100" />
         <item itemvalue="Python.run_stock_query" />
-        <item itemvalue="Python.放量突破股票_20260219_213911" />
-        <item itemvalue="Python.data_generator" />
+        <item itemvalue="Python.run_factor_mining" />
+        <item itemvalue="Python.近日强势股票_强势股综合因子_20260302_232303" />
+        <item itemvalue="Python.mining_agent" />
+        <item itemvalue="Python.近日强势股票_强势股综合因子_20260302_221520" />
       </list>
     </recent_temporary>
   </component>
@@ -449,39 +473,9 @@
           <option name="timeStamp" value="320" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
-          <line>283</line>
-          <option name="timeStamp" value="326" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
-          <line>424</line>
-          <option name="timeStamp" value="333" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
-          <line>106</line>
-          <option name="timeStamp" value="340" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="342" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
           <line>122</line>
           <option name="timeStamp" value="343" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
-          <line>365</line>
-          <option name="timeStamp" value="344" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
-          <line>194</line>
-          <option name="timeStamp" value="362" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/stock_asking_system/tools/stock_screener.py</url>
@@ -539,54 +533,49 @@
           <option name="timeStamp" value="456" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py</url>
-          <line>197</line>
-          <option name="timeStamp" value="459" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py</url>
-          <line>194</line>
-          <option name="timeStamp" value="460" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
-          <line>349</line>
-          <option name="timeStamp" value="463" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
-          <line>352</line>
-          <option name="timeStamp" value="464" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
-          <line>351</line>
-          <option name="timeStamp" value="465" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py</url>
-          <line>192</line>
-          <option name="timeStamp" value="467" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py</url>
           <line>305</line>
           <option name="timeStamp" value="468" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/core/mcp/tool_implementations.py</url>
-          <line>101</line>
-          <option name="timeStamp" value="481" />
+          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
+          <line>194</line>
+          <option name="timeStamp" value="486" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/core/mcp/tool_implementations.py</url>
-          <line>97</line>
-          <option name="timeStamp" value="482" />
+          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
+          <line>191</line>
+          <option name="timeStamp" value="488" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py</url>
-          <line>249</line>
-          <option name="timeStamp" value="483" />
+          <line>619</line>
+          <option name="timeStamp" value="500" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py</url>
+          <line>112</line>
+          <option name="timeStamp" value="519" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/mcp/expression_tools.py</url>
+          <line>488</line>
+          <option name="timeStamp" value="536" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/core/mcp/expression_tools.py</url>
+          <line>539</line>
+          <option name="timeStamp" value="537" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datamodule/stock_data_loader.py</url>
+          <line>202</line>
+          <option name="timeStamp" value="539" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config/api.py</url>
+          <line>4</line>
+          <option name="timeStamp" value="540" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -149,7 +149,7 @@ from typing import Optional
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
-from dataloader.data_interface import DataInterface
+from data2parquet.data_interface import DataInterface
 from core.mcp.tool_implementations import execute_tool
 from core.mcp.expression_tools import ExpressionParser, NamespaceBuilder
 
@@ -309,7 +309,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description='{factor_name} - 因子计算脚本')
-    parser.add_argument('trade_date', type=str, help='交易日期，格式 YYYYMMDD')
+    parser.add_argument('trade_date', type=str, default='20260227', help='交易日期，格式 YYYYMMDD')
     parser.add_argument('--output', type=str, default=None, help='输出文件路径（可选）')
     
     args = parser.parse_args()

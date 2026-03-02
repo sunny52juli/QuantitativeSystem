@@ -22,12 +22,16 @@
     data = loader.load_market_data()
     industries = loader.get_available_industries()
 """
-
+import os
 import pandas as pd
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 from datamodule.base_loader import BaseDataLoader
 from core.exceptions import DataLoadError, StockPoolError
+from dotenv import load_dotenv
+
+# 加载.env文件
+load_dotenv()
 
 
 class StockDataLoader(BaseDataLoader):
@@ -196,7 +200,7 @@ class StockDataLoader(BaseDataLoader):
         import tushare as ts
         
         # 创建 Tushare Pro API 实例
-        pro_api = ts.pro_api()
+        pro_api = ts.pro_api(os.getenv('DATA_SOURCE_TOKEN'))
         calendar = TradeCalendar(pro_api)
         
         # 计算日期范围（向前推更多天以确保有足够的交易日）

@@ -182,8 +182,14 @@ class ExpressionParser:
             data: 数据DataFrame
             
         Returns:
-            计算后的Series，如果无法推断则返回None
+            计算后的 Series，如果无法推断则返回 None
         """
+        # ⚠️ 第一优先级：检查是否是数据中的列（直接使用，不推断）
+        # 这样可以确保使用 SKILL.md 中定义的标准字段
+        if var_name in data.columns:
+            return data[var_name]
+                
+        # ⚠️ 第二优先级：尝试推断衍生变量（仅用于 SKILL.md 中定义的复合变量）
         # 模式1: {field}_{n}d - n日字段值（滚动最小值/最大值）
         field_nd_match = re.match(r'(open|high|low|close|vol|amount)_(\d+)d', var_name, re.IGNORECASE)
         if field_nd_match:
@@ -263,6 +269,18 @@ class ExpressionParser:
             window = int(vol_match.group(1))
             return data.groupby('ts_code')['vol'].transform(lambda x: x.rolling(window).mean())
         
+        # volume_ratio / vol_ratio: 成交量比率（当日成交量/过去 N 日平均成交量）
+        # 支持的模式：volume_ratio, vol_ratio, volume_ratio_20, vol_ratio_10 等
+        vol_ratio_match = re.match(r'(?:volume|vol)_ratio(?:_(\d+))?', var_name, re.IGNORECASE)
+        if vol_ratio_match:
+            window = int(vol_ratio_match.group(1)) if vol_ratio_match.group(1) else 20  # 默认 20 日
+            vol_ma = data.groupby('ts_code')['vol'].transform(lambda x: x.rolling(window).mean())
+            return data['vol'] / vol_ma
+        
+        # 检查是否是数据中的列（包括 volume_ratio 和 vol_ratio）
+        if var_name in data.columns:
+            return data[var_name]
+        
         # SKEW{n}: 偏度
         skew_match = re.match(r'SKEW(\d+)', var_name, re.IGNORECASE)
         if skew_match:
@@ -292,10 +310,6 @@ class ExpressionParser:
         if rank_match:
             window = int(rank_match.group(1))
             return data.groupby('ts_code')['close'].transform(lambda x: x.rolling(window).rank(pct=True))
-        
-        # 检查是否是数据中的列
-        if var_name in data.columns:
-            return data[var_name]
         
         # 无法推断
         return None

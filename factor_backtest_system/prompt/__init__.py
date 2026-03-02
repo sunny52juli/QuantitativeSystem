@@ -11,7 +11,6 @@ from .factor_prompts import (
     get_system_prompt,
     get_user_prompt,
     get_message,
-    get_optimization_suggestion
 )
 
 # 兼容性别名
@@ -24,5 +23,4 @@ __all__ = [
     'get_system_prompt',
     'get_user_prompt',
     'get_message',
-    'get_optimization_suggestion',
 ]

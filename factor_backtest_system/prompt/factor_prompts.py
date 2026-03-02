@@ -195,15 +195,3 @@ def get_message(category: str, key: str, **kwargs) -> str:
     """
     return MessageTemplates.get_message(category, key, **kwargs)
 
-
-def get_optimization_suggestion(suggestion_key: str) -> str:
-    """
-    获取优化建议
-
-    Args:
-        suggestion_key: 建议键
-
-    Returns:
-        建议文本
-    """
-    return FactorMiningAgentPrompts.OPTIMIZATION_SUGGESTIONS.get(suggestion_key, "")

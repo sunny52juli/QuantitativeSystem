@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-因子计算脚本: 量价强势RSI因子
+因子计算脚本: 强势股综合因子
 
 因子说明:
-RSI处于强势区间（>50）且成交量同步放大时得分高，捕捉技术指标与量能配合的强势特征。
+综合短期动量、价格突破（接近20日高点）、RSI强势（>50）、成交量增长以及较低的波动率，构建强势股识别因子。正因子值越高表示股票越强势。
 
-生成时间: 2026-03-01 21:15:41
+生成时间: 2026-03-02 23:54:07
 """
 
 import sys
@@ -19,7 +19,7 @@ from typing import Optional
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
-from dataloader.data_interface import DataInterface
+from data2parquet.data_interface import DataInterface
 from core.mcp.tool_implementations import execute_tool
 from core.mcp.expression_tools import ExpressionParser, NamespaceBuilder
 
@@ -27,34 +27,51 @@ from core.mcp.expression_tools import ExpressionParser, NamespaceBuilder
 # ==================== 因子定义 ====================
 # 此定义用于回测系统直接读取，确保与脚本逻辑一致
 FACTOR_DEFINITION = {
-    "name": "量价强势RSI因子",
+    "name": "强势股综合因子",
     "tools": [
+        {
+            "tool": "pct_change",
+            "params": {
+                "values": "收盘价",
+                "periods": 10
+            },
+            "var": "mom10"
+        },
+        {
+            "tool": "rolling_max",
+            "params": {
+                "values": "收盘价",
+                "window": 20
+            },
+            "var": "high20"
+        },
         {
             "tool": "rsi",
             "params": {
                 "values": "收盘价",
                 "window": 14
             },
-            "var": "rsi_14"
+            "var": "rsi14"
         },
         {
             "tool": "pct_change",
             "params": {
-                "values": "成交量",
+                "values": "vol",
                 "periods": 5
             },
             "var": "vol_mom5"
         },
         {
-            "tool": "zscore_normalize",
+            "tool": "rolling_std",
             "params": {
-                "values": "(rsi_14 - 50) * (vol_mom5 + 1)"
+                "values": "收盘价",
+                "window": 20
             },
-            "var": "rsi_vol_strength"
+            "var": "volatility20"
         }
     ],
-    "expression": "rsi_vol_strength",
-    "rationale": "RSI处于强势区间（>50）且成交量同步放大时得分高，捕捉技术指标与量能配合的强势特征。"
+    "expression": "(mom10 * 0.3) + ((收盘价 - high20) / (high20 + 0.0001) * 0.25) + ((rsi14 - 50) / 50 * 0.2) + (vol_mom5 * 0.15) - (volatility20 * 0.1)",
+    "rationale": "综合短期动量、价格突破（接近20日高点）、RSI强势（>50）、成交量增长以及较低的波动率，构建强势股识别因子。正因子值越高表示股票越强势。"
 }
 # ==================== 因子定义结束 ====================
 
@@ -80,17 +97,17 @@ def calculate_with_data(data: pd.DataFrame) -> pd.Series:
     return executor.calculate_factor_from_definition(FACTOR_DEFINITION, data)
 
 
-class 量价强势rsi因子Calculator:
+class 强势股综合因子Calculator:
     """
-    量价强势RSI因子
+    强势股综合因子
     
     因子说明:
-    RSI处于强势区间（>50）且成交量同步放大时得分高，捕捉技术指标与量能配合的强势特征。
+    综合短期动量、价格突破（接近20日高点）、RSI强势（>50）、成交量增长以及较低的波动率，构建强势股识别因子。正因子值越高表示股票越强势。
     """
     
     def __init__(self):
         """初始化因子计算器"""
-        self.factor_name = "量价强势RSI因子"
+        self.factor_name = "强势股综合因子"
         self.data_interface = DataInterface()
         self.computed_vars = {}
     
@@ -124,46 +141,68 @@ class 量价强势rsi因子Calculator:
         print(f"\n🔧 执行工具调用...")
         self.computed_vars = {}
 
-        # 工具 1: rsi
-        print(f"   [1/3] 执行工具: rsi")
-        rsi_14 = execute_tool(
+        # 工具 1: pct_change
+        print(f"   [1/5] 执行工具: pct_change")
+        mom10 = execute_tool(
+            tool_name='pct_change',
+            data=data,
+            params={"values": "收盘价", "periods": 10},
+            computed_vars=self.computed_vars
+        )
+        self.computed_vars['mom10'] = mom10
+        print(f"      ✅ mom10 计算完成")
+
+        # 工具 2: rolling_max
+        print(f"   [2/5] 执行工具: rolling_max")
+        high20 = execute_tool(
+            tool_name='rolling_max',
+            data=data,
+            params={"values": "收盘价", "window": 20},
+            computed_vars=self.computed_vars
+        )
+        self.computed_vars['high20'] = high20
+        print(f"      ✅ high20 计算完成")
+
+        # 工具 3: rsi
+        print(f"   [3/5] 执行工具: rsi")
+        rsi14 = execute_tool(
             tool_name='rsi',
             data=data,
             params={"values": "收盘价", "window": 14},
             computed_vars=self.computed_vars
         )
-        self.computed_vars['rsi_14'] = rsi_14
-        print(f"      ✅ rsi_14 计算完成")
+        self.computed_vars['rsi14'] = rsi14
+        print(f"      ✅ rsi14 计算完成")
 
-        # 工具 2: pct_change
-        print(f"   [2/3] 执行工具: pct_change")
+        # 工具 4: pct_change
+        print(f"   [4/5] 执行工具: pct_change")
         vol_mom5 = execute_tool(
             tool_name='pct_change',
             data=data,
-            params={"values": "成交量", "periods": 5},
+            params={"values": "vol", "periods": 5},
             computed_vars=self.computed_vars
         )
         self.computed_vars['vol_mom5'] = vol_mom5
         print(f"      ✅ vol_mom5 计算完成")
 
-        # 工具 3: zscore_normalize
-        print(f"   [3/3] 执行工具: zscore_normalize")
-        rsi_vol_strength = execute_tool(
-            tool_name='zscore_normalize',
+        # 工具 5: rolling_std
+        print(f"   [5/5] 执行工具: rolling_std")
+        volatility20 = execute_tool(
+            tool_name='rolling_std',
             data=data,
-            params={"values": "(rsi_14 - 50) * (vol_mom5 + 1)"},
+            params={"values": "收盘价", "window": 20},
             computed_vars=self.computed_vars
         )
-        self.computed_vars['rsi_vol_strength'] = rsi_vol_strength
-        print(f"      ✅ rsi_vol_strength 计算完成")
+        self.computed_vars['volatility20'] = volatility20
+        print(f"      ✅ volatility20 计算完成")
 
         
         # 3. 计算因子表达式
         print(f"\n📐 计算因子表达式...")
-        print(f"   原始表达式: rsi_vol_strength")
+        print(f"   原始表达式: (mom10 * 0.3) + ((收盘价 - high20) / (high20 + 0.0001) * 0.25) + ((rsi14 - 50) / 50 * 0.2) + (vol_mom5 * 0.15) - (volatility20 * 0.1)")
         
         # 解析表达式
-        parsed_expr = ExpressionParser.parse_expression("rsi_vol_strength")
+        parsed_expr = ExpressionParser.parse_expression("(mom10 * 0.3) + ((收盘价 - high20) / (high20 + 0.0001) * 0.25) + ((rsi14 - 50) / 50 * 0.2) + (vol_mom5 * 0.15) - (volatility20 * 0.1)")
         print(f"   解析后表达式: {parsed_expr}")
         
         # 构建命名空间
@@ -267,14 +306,14 @@ def main():
     """主函数"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='量价强势RSI因子 - 因子计算脚本')
-    parser.add_argument('trade_date', type=str, help='交易日期，格式 YYYYMMDD')
+    parser = argparse.ArgumentParser(description='强势股综合因子 - 因子计算脚本')
+    parser.add_argument('trade_date', type=str, default='20260227', help='交易日期，格式 YYYYMMDD')
     parser.add_argument('--output', type=str, default=None, help='输出文件路径（可选）')
     
     args = parser.parse_args()
     
     # 创建因子计算器
-    calculator = 量价强势rsi因子Calculator()
+    calculator = 强势股综合因子Calculator()
     
     # 计算因子
     result = calculator.calculate(args.trade_date)

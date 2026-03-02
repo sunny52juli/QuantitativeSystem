@@ -37,21 +37,57 @@ from core.exceptions import (
 from core.logger import get_logger, LoggerMixin
 
 # 导入业务组件
-from factor_backtest_system.agent.factor_miner import AIFactorMiner
+from factor_backtest_system.agent.ai_factor_agent import AIFactorMiner
 from factor_backtest_system.generators.factor_script_generator import FactorScriptGenerator
 from factor_backtest_system.backtest.factor_loader import FactorScriptExecutor, FactorScriptLoader
 from datamodule.factor_data_loader import FactorDataLoader
 from core.mcp.tools_selection import select_relevant_tools, load_mcp_tools
-from factor_backtest_system.prompt.factor_prompts import get_message, get_optimization_suggestion
+from factor_backtest_system.prompt.factor_prompts import get_message
+from factor_backtest_system.agent.rule_based_optimizer import generate_rule_based_suggestions
+from factor_backtest_system.agent.llm_optimizer import LLMFactorOptimizer, optimize_factor_with_llm
 from config import FactorBacktestConfig
 
 # 获取项目根目录和因子脚本目录
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 FACTOR_SCRIPTS_DIR = PROJECT_ROOT / "factor_backtest_system" / "factor_scripts"
 
-# 类型别名
+# 类型别名（在 factor_optimization_agent.py 中也定义了相同的别名以避免循环导入）
 FactorDict = Dict[str, Any]
 BacktestResult = Dict[str, Any]
+
+
+def _display_rule_based_suggestions(optimization_results: Dict[str, Any]) -> None:
+    """显示规则基础的优化建议报告"""
+    print(f"\n{'='*80}")
+    print("📊 因子优化建议详情")
+    print(f"{'='*80}")
+    
+    for factor_name, result in optimization_results.items():
+        print(f"\n📌 因子：{factor_name}")
+        print(result['report'])
+
+
+def _fallback_to_rule_based_analysis(factor: FactorDict, backtest_result: BacktestResult) -> Dict[str, Any]:
+    """降级到规则基础分析"""
+    # 使用规则基础优化作为后备
+    temp_factors = [factor]
+    temp_results = [backtest_result]
+    
+    rule_based_results = generate_rule_based_suggestions(temp_factors, temp_results)
+    
+    factor_name = factor.get('name', 'unknown')
+    if factor_name in rule_based_results:
+        return {
+            'analysis': rule_based_results[factor_name],
+            'report': rule_based_results[factor_name]['report'],
+            'fallback': True
+        }
+    else:
+        return {
+            'analysis': {},
+            'report': '❌ 无法生成优化建议',
+            'fallback': True
+        }
 
 
 class FactorMiningAgent(LoggerMixin):
@@ -390,39 +426,28 @@ class FactorMiningAgent(LoggerMixin):
     def generate_optimization_suggestions(
         self, 
         factors: List[FactorDict], 
-        backtest_results: List[BacktestResult]
-    ) -> List[Dict[str, Any]]:
+        backtest_results: List[BacktestResult],
+        use_llm: bool = True
+    ) -> Dict[str, Any]:
         """
-        生成因子优化建议
+        生成因子优化建议（支持LLM智能分析）
         
         Args:
             factors: 因子列表
             backtest_results: 回测结果列表
+            use_llm: 是否使用LLM进行深度分析
             
         Returns:
-            优化建议列表
+            优化建议报告
         """
-        suggestions: List[Dict[str, Any]] = []
-        
-        for factor, result in zip(factors, backtest_results):
-            factor_name = factor.get('name', 'unknown')
-            
-            if 'error' in result:
-                suggestions.append({
-                    'factor': factor_name,
-                    'suggestions': [get_optimization_suggestion('computation_error')]
-                })
-                continue
-            
-            backtest = result.get('backtest_result', {})
-            factor_suggestions = self._analyze_factor_performance(factor, backtest)
-            
-            suggestions.append({
-                'factor': factor_name,
-                'suggestions': factor_suggestions
-            })
-        
-        return suggestions
+        if use_llm and self.api_key:
+            # 使用LLM驱动的智能优化
+            return self._generate_llm_optimization_suggestions(factors, backtest_results)
+        else:
+            # 使用规则基础的优化（降级方案）
+            optimization_results = generate_rule_based_suggestions(factors, backtest_results)
+            _display_rule_based_suggestions(optimization_results)
+            return optimization_results
     
     def run_complete_pipeline(
         self, 
@@ -483,7 +508,7 @@ class FactorMiningAgent(LoggerMixin):
             
             # 3. 使用脚本执行器回测因子
             print(f"\n{'='*80}")
-            print("📌 步骤 3: 使用脚本执行器回测因子")
+            print("📌 使用脚本执行器回测因子")
             print("="*80)
             backtest_results = self.backtest_factors(factors, script_paths)
             
@@ -492,7 +517,7 @@ class FactorMiningAgent(LoggerMixin):
             optimization_suggestions = self.generate_optimization_suggestions(
                 factors, backtest_results
             )
-            self._display_optimization_suggestions(optimization_suggestions)
+            # 优化建议已经在 generate_optimization_suggestions 中显示过了
             
             return {
                 'factors': factors,
@@ -557,51 +582,63 @@ class FactorMiningAgent(LoggerMixin):
             else:
                 print(f"      - {label}: {value}")
     
-    def _display_optimization_suggestions(self, suggestions: List[Dict[str, Any]]) -> None:
-        """显示优化建议"""
-        for item in suggestions:
-            print(f"\n📌 {item['factor']}:")
-            for suggestion in item['suggestions']:
-                print(f"   • {suggestion}")
+
+    def _generate_llm_optimization_suggestions(self, factors: List[FactorDict], 
+                                             backtest_results: List[BacktestResult]) -> Dict[str, Any]:
+        """
+        使用LLM生成智能优化建议
+        
+        Args:
+            factors: 因子列表
+            backtest_results: 回测结果列表
+            
+        Returns:
+            LLM优化建议结果
+        """
+        print(f"\n{'='*80}")
+        print("🤖 启动LLM智能因子优化分析")
+        print(f"{'='*80}")
+        
+        llm_optimizer = LLMFactorOptimizer(api_key=self.api_key)
+        llm_results = {}
+        
+        for i, (factor, backtest_result) in enumerate(zip(factors, backtest_results)):
+            factor_name = factor.get('name', f'factor_{i}')
+            print(f"\n📌 分析因子 [{i+1}/{len(factors)}]: {factor_name}")
+            
+            try:
+                # 提取回测结果中的关键信息
+                actual_backtest_data = backtest_result.get('backtest_result', backtest_result)
+                
+                # 调用LLM进行深度分析
+                optimization_result = llm_optimizer.analyze_and_optimize_factor(
+                    factor_definition=factor,
+                    backtest_results=actual_backtest_data
+                )
+                
+                # 格式化并显示报告
+                report = llm_optimizer.format_optimization_report(optimization_result)
+                print(report)
+                
+                llm_results[factor_name] = {
+                    'analysis': optimization_result,
+                    'report': report
+                }
+                
+            except Exception as e:
+                self.logger.error(f"LLM优化分析失败 [{factor_name}]: {e}")
+                print(f"❌ LLM分析失败: {e}")
+                # 降级到规则基础分析
+                fallback_result = _fallback_to_rule_based_analysis(factor, backtest_result)
+                llm_results[factor_name] = fallback_result
+        
+        print(f"\n{'='*80}")
+        print("✅ LLM智能优化分析完成")
+        print(f"{'='*80}")
+        
+        return llm_results
     
-    def _analyze_factor_performance(
-        self, 
-        factor: FactorDict, 
-        backtest: BacktestResult
-    ) -> List[str]:
-        """分析因子表现并生成建议"""
-        suggestions: List[str] = []
-        
-        metrics_data = backtest.get('metrics', {})
-        long_short_metrics = metrics_data.get('group_long_short', {})
-        
-        if not long_short_metrics:
-            suggestions.append(get_optimization_suggestion('computation_error'))
-            return suggestions
-        
-        # 收益率相关建议
-        annual_return = long_short_metrics.get('年化收益率', 0)
-        if annual_return < 0:
-            suggestions.append(get_optimization_suggestion('poor_return'))
-        elif annual_return < 0.1:
-            suggestions.append(get_optimization_suggestion('low_return'))
-        else:
-            suggestions.append(get_optimization_suggestion('good_return'))
-        
-        # 风险相关建议
-        sharpe_ratio = long_short_metrics.get('夏普比率', 0)
-        if sharpe_ratio < 1:
-            suggestions.append(get_optimization_suggestion('low_sharpe'))
-        
-        max_drawdown = long_short_metrics.get('最大回撤', 0)
-        if abs(max_drawdown) > 0.2:
-            suggestions.append(get_optimization_suggestion('high_drawdown'))
-        
-        # 工具复杂度建议
-        if factor.get('tools') and len(factor['tools']) > 3:
-            suggestions.append(get_optimization_suggestion('complex_tools'))
-        
-        return suggestions
+
     
     @staticmethod
     def get_available_tools() -> List[Dict[str, Any]]:
