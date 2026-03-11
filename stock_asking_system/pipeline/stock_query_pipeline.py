@@ -500,17 +500,81 @@ class StockQueryPipeline:
     @staticmethod
     def _display_screening_logic(screening_logic: Dict):
         """显示筛选逻辑详情"""
-        print(f"   筛选条件: {screening_logic.get('name', 'N/A')}")
-        print(f"   工具步骤: {len(screening_logic.get('tools', []))} 步")
+        print(f"   筛选条件：{screening_logic.get('name', 'N/A')}")
+        print(f"   工具步骤：{len(screening_logic.get('tools', []))} 步")
         
         print("\n📋 筛选逻辑详情:")
-        print(f"   表达式: {screening_logic.get('expression', 'N/A')}")
-        print(f"   置信度公式: {screening_logic.get('confidence_formula', 'N/A')}")
+        print(f"   表达式：{screening_logic.get('expression', 'N/A')}")
+        print(f"   置信度公式：{screening_logic.get('confidence_formula', 'N/A')}")
         
         if screening_logic.get('tools'):
             print("   工具调用:")
             for i, tool in enumerate(screening_logic['tools'], 1):
                 print(f"      {i}. {tool.get('var')} = {tool.get('tool')}({tool.get('params', {})})")
+   
+    def generate_script_only(
+       self,
+       query: str,
+       top_n: int = 20,
+    ) -> Optional[Dict[str, Any]]:
+
+        """
+        仅生成筛选脚本，不执行筛选和回测
+
+        工作流程：
+        1. 选择相关工具
+        2. Agent 生成筛选逻辑
+        3. 将筛选逻辑保存为脚本文件到 asking_scripts 目录
+
+        Args:
+           query: 用户的自然语言查询
+           top_n: 返回的股票数量上限（用于脚本中的默认值）
+
+        Returns:
+           结果字典：{'script_path': str, 'screening_logic': dict}, 失败时返回 None
+        """
+
+        print("\n" + "=" * 80)
+        print("📝 生成筛选脚本")
+        print("=" * 80)
+        print(f"🔍 查询：{query}")
+        print(f"🔢 默认返回数量：{top_n}")
+        print("=" * 80)
+
+        try:
+           # 1. 选择相关工具
+          print("\n🔧 选择分析工具...")
+          relevant_tools = select_relevant_tools(query, self.available_tools)
+          print(f"   选中工具：{len(relevant_tools)} 个")
+
+           # 2. 生成筛选逻辑（调用 LLM Agent）
+          print("\n🤖 生成筛选逻辑...")
+          screening_logic = self.logic_agent.generate(query, relevant_tools)
+
+          if not screening_logic:
+            print("❌ 无法生成筛选逻辑")
+            return None
+
+          self._display_screening_logic(screening_logic)
+
+           # 3. 保存脚本
+          print("\n💾 保存筛选脚本...")
+          script_path = self.script_generator.generate_script(
+               screening_logic=screening_logic,
+               query=query
+           )
+
+          print(f"\n✅ 脚本已保存：{os.path.basename(script_path)}")
+
+          return {
+               'script_path': script_path,
+               'screening_logic': screening_logic,
+           }
+
+        except Exception as e:
+          print(f"❌ 生成脚本失败：{e}")
+          traceback.print_exc()
+          return None
 
     @staticmethod
     def _display_results(results: List[Dict[str, Any]]):

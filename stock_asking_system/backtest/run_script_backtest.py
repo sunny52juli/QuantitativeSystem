@@ -39,6 +39,7 @@ from stock_asking_system.backtest.asking_script_loader import AskingScriptLoader
 from stock_asking_system.tools.stock_screener import StockScreener
 from datamodule.stock_data_loader import StockDataLoader
 from config import StockQueryConfig
+from stock_asking_system.backtest.backtest_report import print_detailed_backtest_report, print_backtest_summary
 
 
 class AskingScriptBacktester:
@@ -342,30 +343,33 @@ class AskingScriptBacktester:
         
         returns_result = self._calculate_holding_returns(candidates)
         
-        # 4. 显示简要收益率统计
+        # 4. 显示详细回测报告
         ret_summary = returns_result.get('summary', {})
+        per_stock = returns_result.get('per_stock', [])
+        screening_date_str = returns_result.get('screening_date', 'N/A')
+                
         if verbose:
-            for period in self.holding_periods:
-                stats = ret_summary.get(period, {})
-                if stats.get('count', 0) > 0:
-                    print(f"      {period}日: 平均收益 {stats['mean']:.2%}, "
-                          f"胜率 {stats['win_rate']:.1%}, "
-                          f"有效 {stats['valid_stocks']}/{stats['total_stocks']}")
-                else:
-                    print(f"      {period}日: 数据不足")
+            self._print_detailed_backtest_report(
+                logic_name=logic_name,
+                screening_date_str=screening_date_str,
+                candidates=candidates,
+                returns_result=returns_result,
+            )
         
         # 5. 构建摘要
         summary_entry = {
             'script': script_name,
-            'logic_name': logic_name,
+            # ✅ 使用脚本文件名作为逻辑名称（去掉 .py 后缀），方便区分不同脚本
+            'logic_name': script_name.replace('.py', ''),
             'status': '成功',
             'stock_count': len(candidates),
             'screening_date': returns_result.get('screening_date', 'N/A'),
         }
         for period in self.holding_periods:
             stats = ret_summary.get(period, {})
-            summary_entry[f'平均收益({period}d)'] = stats.get('mean')
-            summary_entry[f'胜率({period}d)'] = stats.get('win_rate')
+            # ✅ 注意：字段名必须与 print_backtest_summary 中的期望一致（带空格）
+            summary_entry[f'平均收益 ({period}d)'] = stats.get('mean')
+            summary_entry[f'胜率 ({period}d)'] = stats.get('win_rate')
         
         return {
             'summary': summary_entry,
@@ -395,9 +399,26 @@ class AskingScriptBacktester:
         screening_date = self._screening_date
         screening_date_str = screening_date.strftime('%Y%m%d')
         
+        # 📊 诊断：检查数据范围和筛选日位置
+        print(f"   📅 筛选日：{screening_date_str}")
+        print(f"   📊 数据范围：{self._all_dates[0].strftime('%Y%m%d')} ~ {self._all_dates[-1].strftime('%Y%m%d')}")
+        print(f"   📊 总交易日数：{len(self._all_dates)}")
+        
         # 找到筛选日在日期列表中的位置
         try:
             screen_idx = list(self._all_dates).index(screening_date)
+            remaining_days = len(self._all_dates) - screen_idx - 1
+            print(f"   📊 筛选日位置：第{screen_idx + 1}天，后面还有{remaining_days}个交易日")
+            
+            # 检查每个持有期是否有足够的未来数据
+            for period in self.holding_periods:
+                target_idx = screen_idx + period
+                if target_idx < len(self._all_dates):
+                    target_date = self._all_dates[target_idx]
+                    print(f"   ✅ {period}日持有期：目标日{target_date.strftime('%Y%m%d')} 存在")
+                else:
+                    print(f"   ❌ {period}日持有期：目标日超出数据范围 (需要第{target_idx + 1}天，但只有{len(self._all_dates)}天)")
+                    
         except ValueError:
             print(f"   ⚠️ 筛选日 {screening_date_str} 不在数据中")
             return {'screening_date': screening_date_str, 'per_stock': [], 'summary': {}}
@@ -489,43 +510,43 @@ class AskingScriptBacktester:
     
     def _print_summary_report(self, summary_list: List[Dict]):
         """打印回测汇总报告"""
-        print(f"\n\n{'=' * 80}")
-        print("📋 回测汇总报告")
-        print(f"{'=' * 80}")
-        
-        success_count = sum(1 for s in summary_list if s['status'] == '成功')
-        fail_count = sum(1 for s in summary_list if s['status'] == '失败')
-        print(f"\n   📊 总计: {len(summary_list)} 个脚本 | "
-              f"✅ 成功: {success_count} | ❌ 失败: {fail_count}")
-        
-        if success_count > 0:
-            # 构建表头
-            header = f"   {'筛选名称':<25} {'股票数':>6}"
+        # 检查是否所有收益率都是N/A
+        all_na = True
+        for entry in summary_list:
             for period in self.holding_periods:
-                header += f" {f'平均{period}日':>10} {f'胜率{period}日':>8}"
-            print(f"\n{header}")
-            print(f"   {'-' * (31 + 19 * len(self.holding_periods))}")
-            
-            for s in summary_list:
-                if s['status'] == '成功':
-                    line = f"   {s['logic_name']:<25} {s.get('stock_count', 0):>6}"
-                    for period in self.holding_periods:
-                        avg_ret = s.get(f'平均收益({period}d)')
-                        win_rate = s.get(f'胜率({period}d)')
-                        line += f" {avg_ret:>10.2%}" if avg_ret is not None else f" {'N/A':>10}"
-                        line += f" {win_rate:>8.1%}" if win_rate is not None else f" {'N/A':>8}"
-                    print(line)
+                avg_key = f'平均收益 ({period}d)'
+                if avg_key in entry and entry[avg_key] is not None:
+                    all_na = False
+                    break
+            if not all_na:
+                break
         
-        if fail_count > 0:
-            print(f"\n   ❌ 失败的脚本:")
-            for s in summary_list:
-                if s['status'] == '失败':
-                    print(f"      - {s.get('logic_name', 'N/A')}: {s.get('error', '未知错误')}")
+        if all_na and summary_list:
+            print("\n⚠️  警告：所有脚本的收益率数据都是N/A")
+            print("💡  可能原因：筛选日是最新交易日，没有足够的未来数据计算收益率")
+            print(f"💡  建议：使用更早的筛选日（至少提前{max(self.holding_periods)}个交易日）")
+            print("")
         
-        print(f"\n{'=' * 80}")
-
-
-# ==================== 便捷函数 ====================
+        print_backtest_summary(summary_list, self.holding_periods)
+    
+    def _print_detailed_backtest_report(
+        self,
+        logic_name: str,
+        screening_date_str: str,
+        candidates: List[Dict[str, Any]],
+        returns_result: Dict[str, Any],
+    ):
+        """
+        打印详细回测报告（按用户要求的格式）
+        调用公共的 backtest_report 模块
+        """
+        print_detailed_backtest_report(
+            title=logic_name,
+            screening_date=screening_date_str,
+            candidates=candidates,
+            returns_result=returns_result,
+            holding_periods=self.holding_periods,
+        )
 
 def backtest_asking_scripts(
     script_paths: Union[str, List[str], None] = None,

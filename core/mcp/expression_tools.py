@@ -231,6 +231,44 @@ class ExpressionParser:
             window = int(ma_match.group(1))
             return data.groupby('ts_code')['close'].transform(lambda x: x.rolling(window).mean())
         
+        # ma_{n} 或 ma{n}: 移动平均（支持两种格式）
+        ma_underscore_match = re.match(r'ma_(\d+)', var_name, re.IGNORECASE)
+        if ma_underscore_match:
+            window = int(ma_underscore_match.group(1))
+            return data.groupby('ts_code')['close'].transform(lambda x: x.rolling(window).mean())
+        
+        # ema_{n} 或 ema{n}: 指数移动平均
+        ema_underscore_match = re.match(r'ema_(\d+)', var_name, re.IGNORECASE)
+        if ema_underscore_match:
+            span = int(ema_underscore_match.group(1))
+            return data.groupby('ts_code')['close'].transform(lambda x: x.ewm(span=span).mean())
+        
+        # std_{n} 或 std{n}: 标准差
+        std_underscore_match = re.match(r'std_(\d+)', var_name, re.IGNORECASE)
+        if std_underscore_match:
+            window = int(std_underscore_match.group(1))
+            return data.groupby('ts_code')['close'].transform(lambda x: x.rolling(window).std())
+        
+        # rsi_{n} 或 rsi{n}: RSI 指标
+        rsi_underscore_match = re.match(r'rsi_(\d+)', var_name, re.IGNORECASE)
+        if rsi_underscore_match:
+            window = int(rsi_underscore_match.group(1))
+            
+            def calc_rsi(x):
+                delta = x.diff()
+                gain = (delta.where(delta > 0, 0)).rolling(window).mean()
+                loss = (-delta.where(delta < 0, 0)).rolling(window).mean()
+                rs = gain / (loss + 1e-8)
+                return 100 - (100 / (1 + rs))
+            
+            return data.groupby('ts_code')['close'].transform(calc_rsi)
+        
+        # mom_{n} 或 mom{n}: 动量
+        mom_underscore_match = re.match(r'mom_(\d+)', var_name, re.IGNORECASE)
+        if mom_underscore_match:
+            periods = int(mom_underscore_match.group(1))
+            return data.groupby('ts_code')['close'].pct_change(periods)
+        
         # EMA{n}: 指数移动平均
         ema_match = re.match(r'EMA(\d+)', var_name, re.IGNORECASE)
         if ema_match:
@@ -269,17 +307,18 @@ class ExpressionParser:
             window = int(vol_match.group(1))
             return data.groupby('ts_code')['vol'].transform(lambda x: x.rolling(window).mean())
         
+        # 检查是否是数据中的列（优先检查，包括 vol_ratio）
+        if var_name in data.columns:
+            return data[var_name]
+        
         # volume_ratio / vol_ratio: 成交量比率（当日成交量/过去 N 日平均成交量）
         # 支持的模式：volume_ratio, vol_ratio, volume_ratio_20, vol_ratio_10 等
+        # 注意：如果数据中没有 vol_ratio 列，则自动计算
         vol_ratio_match = re.match(r'(?:volume|vol)_ratio(?:_(\d+))?', var_name, re.IGNORECASE)
         if vol_ratio_match:
             window = int(vol_ratio_match.group(1)) if vol_ratio_match.group(1) else 20  # 默认 20 日
             vol_ma = data.groupby('ts_code')['vol'].transform(lambda x: x.rolling(window).mean())
             return data['vol'] / vol_ma
-        
-        # 检查是否是数据中的列（包括 volume_ratio 和 vol_ratio）
-        if var_name in data.columns:
-            return data[var_name]
         
         # SKEW{n}: 偏度
         skew_match = re.match(r'SKEW(\d+)', var_name, re.IGNORECASE)

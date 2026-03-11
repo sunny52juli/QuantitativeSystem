@@ -27,6 +27,7 @@ import pandas as pd
 from factor_backtest_system.backtest.factor_loader import FactorScriptLoader, FactorScriptExecutor
 from config import FactorBacktestConfig
 from factor_backtest_system.backtest.factor_backtest import FactorMiningFramework
+from factor_backtest_system.backtest.backtest_report import print_factor_backtest_summary
 
 
 def backtest_factor_scripts(
@@ -280,7 +281,7 @@ def backtest_factor_scripts(
     
     # ==================== 6. 输出汇总报告 ====================
     if verbose:
-        _print_summary_report(summary_list, _holding_periods)
+        print_factor_backtest_summary(summary_list, _holding_periods)
     
     return {
         'summary': summary_list,
@@ -288,38 +289,6 @@ def backtest_factor_scripts(
         'script_paths': valid_paths,
         'config': config_info,
     }
-
-
-def _print_summary_report(summary_list: List[Dict], holding_periods: List[int]):
-    """打印回测汇总报告"""
-    print(f"\n\n{'=' * 80}")
-    print("📋 回测汇总报告")
-    print(f"{'=' * 80}")
-    
-    success_count = sum(1 for s in summary_list if s['status'] == '成功')
-    fail_count = sum(1 for s in summary_list if s['status'] == '失败')
-    print(f"\n   📊 总计: {len(summary_list)} 个因子 | "
-          f"✅ 成功: {success_count} | ❌ 失败: {fail_count}")
-    
-    if success_count > 0:
-        main_period = holding_periods[0]
-        print(f"\n   {'因子名称':<25} {'年化收益率':>12} {'夏普比率':>10} {'最大回撤':>10} {'胜率':>10}")
-        print(f"   {'-' * 67}")
-        for s in summary_list:
-            if s['status'] == '成功':
-                ann_ret = s.get(f'年化收益率({main_period}d)', 0) or 0
-                sharpe = s.get(f'夏普比率({main_period}d)', 0) or 0
-                max_dd = s.get(f'最大回撤({main_period}d)', 0) or 0
-                win_rate = s.get(f'胜率({main_period}d)', 0) or 0
-                print(f"   {s['factor_name']:<25} {ann_ret:>11.2%} {sharpe:>10.3f} {max_dd:>10.2%} {win_rate:>10.2%}")
-    
-    if fail_count > 0:
-        print(f"\n   ❌ 失败的因子:")
-        for s in summary_list:
-            if s['status'] == '失败':
-                print(f"      - {s['factor_name']}: {s.get('error', '未知错误')}")
-    
-    print(f"\n{'=' * 80}")
 
 
 # ==================== 命令行入口 ====================

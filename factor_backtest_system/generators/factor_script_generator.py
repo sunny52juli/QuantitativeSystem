@@ -144,6 +144,8 @@ import json
 import pandas as pd
 import numpy as np
 from typing import Optional
+from dotenv import load_dotenv
+load_dotenv()
 
 # 添加项目根目录到路径
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -228,12 +230,8 @@ class {to_class_name(factor_name)}:
 {expression_code}
         
         # 4. 返回结果
-        result_df = pd.DataFrame({{
-            'ts_code': factor_values.index.get_level_values('ts_code'),
-            'trade_date': trade_date,
-            self.factor_name: factor_values.values
-        }})
-        
+        result_df = factor_values.to_frame(self.factor_name)
+    
         print(f"\\n✅ 因子计算完成")
         print(f"   有效值数量: {{result_df[self.factor_name].notna().sum()}}")
         print(f"   因子均值: {{result_df[self.factor_name].mean():.4f}}")
@@ -257,11 +255,11 @@ class {to_class_name(factor_name)}:
             from config import FactorBacktestConfig
             
             # 计算开始日期（向前推120个交易日，确保有足够的历史数据）
-            from dataloader.trade_calendar import TradeCalendar
+            from data2parquet.trade_calendar import TradeCalendar
             import tushare as ts
             
             # 创建 Tushare Pro API 实例
-            pro_api = ts.pro_api()
+            pro_api = ts.pro_api(os.getenv('DATA_SOURCE_TOKEN'))
             calendar = TradeCalendar(pro_api)
             
             # 获取交易日历
@@ -309,7 +307,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description='{factor_name} - 因子计算脚本')
-    parser.add_argument('trade_date', type=str, default='20260227', help='交易日期，格式 YYYYMMDD')
+    parser.add_argument('--trade_date', type=str, default='20260227', help='交易日期，格式 YYYYMMDD')
     parser.add_argument('--output', type=str, default=None, help='输出文件路径（可选）')
     
     args = parser.parse_args()

@@ -3,9 +3,9 @@
 因子计算脚本: 强势股综合因子
 
 因子说明:
-综合短期动量、价格突破（接近20日高点）、RSI强势（>50）、成交量增长以及较低的波动率，构建强势股识别因子。正因子值越高表示股票越强势。
+综合捕捉强势股特征：1) 10日动量标准化；2) 价格突破20日高点位置；3) RSI相对强弱（>50为强）；4) 5日成交量动量；5) 降低高波动率股票的权重，筛选强势且稳定的股票。
 
-生成时间: 2026-03-02 23:54:07
+生成时间: 2026-03-11 23:10:00
 """
 
 import sys
@@ -14,6 +14,8 @@ import json
 import pandas as pd
 import numpy as np
 from typing import Optional
+from dotenv import load_dotenv
+load_dotenv()
 
 # 添加项目根目录到路径
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,7 +37,7 @@ FACTOR_DEFINITION = {
                 "values": "收盘价",
                 "periods": 10
             },
-            "var": "mom10"
+            "var": "mom_10"
         },
         {
             "tool": "rolling_max",
@@ -43,7 +45,7 @@ FACTOR_DEFINITION = {
                 "values": "收盘价",
                 "window": 20
             },
-            "var": "high20"
+            "var": "high_20d"
         },
         {
             "tool": "rsi",
@@ -51,7 +53,7 @@ FACTOR_DEFINITION = {
                 "values": "收盘价",
                 "window": 14
             },
-            "var": "rsi14"
+            "var": "rsi_14"
         },
         {
             "tool": "pct_change",
@@ -59,7 +61,7 @@ FACTOR_DEFINITION = {
                 "values": "vol",
                 "periods": 5
             },
-            "var": "vol_mom5"
+            "var": "vol_mom_5"
         },
         {
             "tool": "rolling_std",
@@ -67,11 +69,11 @@ FACTOR_DEFINITION = {
                 "values": "收盘价",
                 "window": 20
             },
-            "var": "volatility20"
+            "var": "volatility_20"
         }
     ],
-    "expression": "(mom10 * 0.3) + ((收盘价 - high20) / (high20 + 0.0001) * 0.25) + ((rsi14 - 50) / 50 * 0.2) + (vol_mom5 * 0.15) - (volatility20 * 0.1)",
-    "rationale": "综合短期动量、价格突破（接近20日高点）、RSI强势（>50）、成交量增长以及较低的波动率，构建强势股识别因子。正因子值越高表示股票越强势。"
+    "expression": "zscore(mom_10) + zscore((收盘价 - high_20d) / (high_20d + 0.0001)) + zscore(rsi_14 - 50) + zscore(vol_mom_5) - zscore(volatility_20)",
+    "rationale": "综合捕捉强势股特征：1) 10日动量标准化；2) 价格突破20日高点位置；3) RSI相对强弱（>50为强）；4) 5日成交量动量；5) 降低高波动率股票的权重，筛选强势且稳定的股票。"
 }
 # ==================== 因子定义结束 ====================
 
@@ -102,7 +104,7 @@ class 强势股综合因子Calculator:
     强势股综合因子
     
     因子说明:
-    综合短期动量、价格突破（接近20日高点）、RSI强势（>50）、成交量增长以及较低的波动率，构建强势股识别因子。正因子值越高表示股票越强势。
+    综合捕捉强势股特征：1) 10日动量标准化；2) 价格突破20日高点位置；3) RSI相对强弱（>50为强）；4) 5日成交量动量；5) 降低高波动率股票的权重，筛选强势且稳定的股票。
     """
     
     def __init__(self):
@@ -143,66 +145,66 @@ class 强势股综合因子Calculator:
 
         # 工具 1: pct_change
         print(f"   [1/5] 执行工具: pct_change")
-        mom10 = execute_tool(
+        mom_10 = execute_tool(
             tool_name='pct_change',
             data=data,
             params={"values": "收盘价", "periods": 10},
             computed_vars=self.computed_vars
         )
-        self.computed_vars['mom10'] = mom10
-        print(f"      ✅ mom10 计算完成")
+        self.computed_vars['mom_10'] = mom_10
+        print(f"      ✅ mom_10 计算完成")
 
         # 工具 2: rolling_max
         print(f"   [2/5] 执行工具: rolling_max")
-        high20 = execute_tool(
+        high_20d = execute_tool(
             tool_name='rolling_max',
             data=data,
             params={"values": "收盘价", "window": 20},
             computed_vars=self.computed_vars
         )
-        self.computed_vars['high20'] = high20
-        print(f"      ✅ high20 计算完成")
+        self.computed_vars['high_20d'] = high_20d
+        print(f"      ✅ high_20d 计算完成")
 
         # 工具 3: rsi
         print(f"   [3/5] 执行工具: rsi")
-        rsi14 = execute_tool(
+        rsi_14 = execute_tool(
             tool_name='rsi',
             data=data,
             params={"values": "收盘价", "window": 14},
             computed_vars=self.computed_vars
         )
-        self.computed_vars['rsi14'] = rsi14
-        print(f"      ✅ rsi14 计算完成")
+        self.computed_vars['rsi_14'] = rsi_14
+        print(f"      ✅ rsi_14 计算完成")
 
         # 工具 4: pct_change
         print(f"   [4/5] 执行工具: pct_change")
-        vol_mom5 = execute_tool(
+        vol_mom_5 = execute_tool(
             tool_name='pct_change',
             data=data,
             params={"values": "vol", "periods": 5},
             computed_vars=self.computed_vars
         )
-        self.computed_vars['vol_mom5'] = vol_mom5
-        print(f"      ✅ vol_mom5 计算完成")
+        self.computed_vars['vol_mom_5'] = vol_mom_5
+        print(f"      ✅ vol_mom_5 计算完成")
 
         # 工具 5: rolling_std
         print(f"   [5/5] 执行工具: rolling_std")
-        volatility20 = execute_tool(
+        volatility_20 = execute_tool(
             tool_name='rolling_std',
             data=data,
             params={"values": "收盘价", "window": 20},
             computed_vars=self.computed_vars
         )
-        self.computed_vars['volatility20'] = volatility20
-        print(f"      ✅ volatility20 计算完成")
+        self.computed_vars['volatility_20'] = volatility_20
+        print(f"      ✅ volatility_20 计算完成")
 
         
         # 3. 计算因子表达式
         print(f"\n📐 计算因子表达式...")
-        print(f"   原始表达式: (mom10 * 0.3) + ((收盘价 - high20) / (high20 + 0.0001) * 0.25) + ((rsi14 - 50) / 50 * 0.2) + (vol_mom5 * 0.15) - (volatility20 * 0.1)")
+        print(f"   原始表达式: zscore(mom_10) + zscore((收盘价 - high_20d) / (high_20d + 0.0001)) + zscore(rsi_14 - 50) + zscore(vol_mom_5) - zscore(volatility_20)")
         
         # 解析表达式
-        parsed_expr = ExpressionParser.parse_expression("(mom10 * 0.3) + ((收盘价 - high20) / (high20 + 0.0001) * 0.25) + ((rsi14 - 50) / 50 * 0.2) + (vol_mom5 * 0.15) - (volatility20 * 0.1)")
+        parsed_expr = ExpressionParser.parse_expression("zscore(mom_10) + zscore((收盘价 - high_20d) / (high_20d + 0.0001)) + zscore(rsi_14 - 50) + zscore(vol_mom_5) - zscore(volatility_20)")
         print(f"   解析后表达式: {parsed_expr}")
         
         # 构建命名空间
@@ -226,12 +228,8 @@ class 强势股综合因子Calculator:
             raise
         
         # 4. 返回结果
-        result_df = pd.DataFrame({
-            'ts_code': factor_values.index.get_level_values('ts_code'),
-            'trade_date': trade_date,
-            self.factor_name: factor_values.values
-        })
-        
+        result_df = factor_values.to_frame(self.factor_name)
+    
         print(f"\n✅ 因子计算完成")
         print(f"   有效值数量: {result_df[self.factor_name].notna().sum()}")
         print(f"   因子均值: {result_df[self.factor_name].mean():.4f}")
@@ -255,11 +253,11 @@ class 强势股综合因子Calculator:
             from config import FactorBacktestConfig
             
             # 计算开始日期（向前推120个交易日，确保有足够的历史数据）
-            from dataloader.trade_calendar import TradeCalendar
+            from data2parquet.trade_calendar import TradeCalendar
             import tushare as ts
             
             # 创建 Tushare Pro API 实例
-            pro_api = ts.pro_api()
+            pro_api = ts.pro_api(os.getenv('DATA_SOURCE_TOKEN'))
             calendar = TradeCalendar(pro_api)
             
             # 获取交易日历
@@ -307,7 +305,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description='强势股综合因子 - 因子计算脚本')
-    parser.add_argument('trade_date', type=str, default='20260227', help='交易日期，格式 YYYYMMDD')
+    parser.add_argument('--trade_date', type=str, default='20260227', help='交易日期，格式 YYYYMMDD')
     parser.add_argument('--output', type=str, default=None, help='输出文件路径（可选）')
     
     args = parser.parse_args()

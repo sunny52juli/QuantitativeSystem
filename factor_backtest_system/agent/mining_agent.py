@@ -40,12 +40,14 @@ from core.logger import get_logger, LoggerMixin
 from factor_backtest_system.agent.ai_factor_agent import AIFactorMiner
 from factor_backtest_system.generators.factor_script_generator import FactorScriptGenerator
 from factor_backtest_system.backtest.factor_loader import FactorScriptExecutor, FactorScriptLoader
+from factor_backtest_system.backtest.backtest_report import print_single_factor_detail
 from datamodule.factor_data_loader import FactorDataLoader
 from core.mcp.tools_selection import select_relevant_tools, load_mcp_tools
 from factor_backtest_system.prompt.factor_prompts import get_message
 from factor_backtest_system.agent.rule_based_optimizer import generate_rule_based_suggestions
 from factor_backtest_system.agent.llm_optimizer import LLMFactorOptimizer, optimize_factor_with_llm
 from config import FactorBacktestConfig
+from config.data_fields import FIELD_MAPPING, FUNCTION_MAPPING
 
 # 获取项目根目录和因子脚本目录
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -359,70 +361,123 @@ class FactorMiningAgent(LoggerMixin):
         factor_spec: FactorDict
     ) -> BacktestResult:
         """
-        使用预计算的因子值执行回测
-        
+        使用预计算的因子值执行回测（优化版 - 避免重复加载数据）
+            
         Args:
             factor_name: 因子名称
             factor_values: 因子值 Series
             factor_spec: 因子定义
-            
+                
         Returns:
             回测结果字典
         """
         from factor_backtest_system.backtest.factor_backtest import FactorMiningFramework
-        
+            
         # 添加因子值到数据
         temp_data = self.data.copy()
         temp_data[factor_name] = factor_values
-        
-        # 计算未来收益率（适配双索引结构）
+            
+        # 计算未来收益率（适配双索引结构，并计算所有持有期的收益率）
         temp_data_reset = temp_data.reset_index()
-        temp_data_reset['ret'] = temp_data_reset.groupby('ts_code')['close'].pct_change().shift(-1)
-        temp_data = temp_data_reset.set_index(['trade_date', 'ts_code'])
-        
-        # 创建回测框架
-        framework = FactorMiningFramework()
-        
-        # 对所有配置的持有期进行回测
+            
+        # 计算所有配置的持有期收益率
         holding_periods = FactorBacktestConfig.HOLDING_PERIODS
-        print(f"   📊 测试多个持有期: {holding_periods}")
+        print(f"   📊 计算未来收益率，持有期：{holding_periods}")
+        for period in holding_periods:
+            ret_col = f'ret_{period}d'
+            if ret_col not in temp_data_reset.columns:
+                # 计算 period 天后的收益率
+                temp_data_reset[ret_col] = temp_data_reset.groupby('ts_code')['close'].pct_change(period).shift(-period)
+            
+        # 默认使用 1 日收益率作为 ret 列（向后兼容）
+        if 'ret' not in temp_data_reset.columns:
+            temp_data_reset['ret'] = temp_data_reset['ret_1d'] if 'ret_1d' in temp_data_reset.columns else \
+                                  temp_data_reset.groupby('ts_code')['close'].pct_change().shift(-1)
+            
+        temp_data = temp_data_reset.set_index(['trade_date', 'ts_code'])
+            
+        # ✅ 不创建新的 FactorMiningFramework 实例，直接使用已有数据进行回测
+        # 创建临时的回测框架（不加载数据，直接使用已处理的数据）
+        class SimpleBacktester:
+            """简单回测器 - 使用已有数据执行回测，避免重复加载"""
+            def __init__(self, data: pd.DataFrame, holding_periods: List[int]):
+                self.data = data
+                self.holding_periods = holding_periods
+                self.field_mapping = FIELD_MAPPING
+                self.function_mapping = FUNCTION_MAPPING
+                
+            def backtest_factor(self, data_with_factor, factor_name, n_groups=5, holding_period=1):
+                """执行回测"""
+                framework = FactorMiningFramework.__new__(FactorMiningFramework)  # 创建空实例
+                framework.data = self.data
+                framework.holding_periods = self.holding_periods
+                framework.field_mapping = self.field_mapping
+                framework.function_mapping = self.function_mapping
+                # ✅ 直接回测，不再重新计算收益率
+                return framework.backtest_factor(data_with_factor, factor_name, n_groups, holding_period)
+            
+        backtester = SimpleBacktester(temp_data, holding_periods)
+            
+        # 对所有配置的持有期进行回测
+        print(f"   📊 测试多个持有期：{holding_periods}")
+                
+        # 诊断：检查每个持有期的有效样本数
+        temp_data_check = temp_data.reset_index()
+        print(f"   📈 总样本数：{len(temp_data_check)}")
         
+        # 检查因子值的缺失情况
+        factor_missing = temp_data_check[factor_name].isna().sum()
+        factor_valid = temp_data_check[factor_name].notna().sum()
+        print(f"   📊 {factor_name}: 有效={factor_valid:,}, 缺失={factor_missing:,} ({factor_missing/len(temp_data_check)*100:.1f}%)")
+        
+        for period in holding_periods:
+            ret_col = f'ret_{period}d'
+            if ret_col in temp_data_check.columns:
+                valid_count = temp_data_check[ret_col].notna().sum()
+                nan_count = temp_data_check[ret_col].isna().sum()
+                print(f"   📊 {ret_col}: 有效={valid_count:,}, 缺失={nan_count:,} ({nan_count/len(temp_data_check)*100:.1f}%)")
+        
+        # 诊断：检查按日期的分组统计
+        date_counts = temp_data_check.groupby('trade_date').agg({
+            factor_name: ['count', 'sum', 'mean', 'std'],
+        }).reset_index()
+        print(f"   📅 按日期统计 - 最早日期：{date_counts['trade_date'].min()}, 最晚日期：{date_counts['trade_date'].max()}")
+        print(f"   📅 有数据的日期数：{date_counts[factor_name]['count'].gt(0).sum()} / {len(date_counts)}")
+                
         all_results: Dict[str, BacktestResult] = {}
         for period in holding_periods:
-            print(f"   ⏱️ 回测持有期: {period}天")
-            period_results = framework.backtest_factor(
+            print(f"   ⏱️ 回测持有期：{period}天")
+            period_results = backtester.backtest_factor(
                 temp_data,
                 factor_name=factor_name,
                 n_groups=5,
                 holding_period=period
             )
             all_results[f'{period}d'] = period_results
-        
+            
         # 使用第一个持有期的结果作为主结果
         main_period = holding_periods[0]
         results = all_results[f'{main_period}d']
-        
+            
         results['factor_name'] = factor_name
         results['expression'] = factor_spec.get('expression', 'computed')
         results['all_holding_periods'] = all_results
-        
-        # 打印所有持有期的结果
-        for i, period in enumerate(holding_periods):
-            period_result = all_results[f'{period}d']
             
-            if i == 0:
-                print(f"\n{'='*80}")
-                print(f"📊 主要持有期回测结果: {period}天")
-                print(f"{'='*80}")
-            else:
-                print(f"\n{'='*80}")
-                print(f"📊 持有期回测结果: {period}天")
-                print(f"{'='*80}")
+        # 打印所有持有期的结果（使用公共的报告模块）
+        print_single_factor_detail(
+            factor_name=factor_name,
+            all_period_results=all_results,
+            holding_periods=holding_periods,
+            verbose=True
+        )
             
-            framework.print_results(period_result)
-        
         return results
     
+    def _display_backtest_result(self, backtest_result: BacktestResult) -> None:
+        """显示回测结果（简化版，仅显示主要指标）"""
+        # 详细报告已在 print_single_factor_detail 中显示，这里只显示简短提示
+        pass
+
     def generate_optimization_suggestions(
         self, 
         factors: List[FactorDict], 
@@ -553,36 +608,6 @@ class FactorMiningAgent(LoggerMixin):
             print(f"   表达式: {factor.get('expression', 'N/A')}")
             print(f"   逻辑: {factor.get('rationale', 'N/A')}")
     
-    def _display_backtest_result(self, backtest_result: BacktestResult) -> None:
-        """显示回测结果"""
-        print(f"   📊 回测结果:")
-        
-        if not backtest_result:
-            print("      - 回测结果为空")
-            return
-        
-        metrics_data = backtest_result.get('metrics', {})
-        long_short_metrics = metrics_data.get('group_long_short', {})
-        
-        if not long_short_metrics:
-            print("      - 未找到多空组合指标")
-            return
-        
-        metrics_mapping = [
-            ('年化收益率', '年化收益率', '.2%'),
-            ('夏普比率', '夏普比率', '.2f'),
-            ('最大回撤', '最大回撤', '.2%'),
-            ('胜率', '胜率', '.2%')
-        ]
-        
-        for key, label, fmt in metrics_mapping:
-            value = long_short_metrics.get(key, 'N/A')
-            if isinstance(value, (int, float)):
-                print(f"      - {label}: {value:{fmt}}")
-            else:
-                print(f"      - {label}: {value}")
-    
-
     def _generate_llm_optimization_suggestions(self, factors: List[FactorDict], 
                                              backtest_results: List[BacktestResult]) -> Dict[str, Any]:
         """

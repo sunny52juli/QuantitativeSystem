@@ -73,11 +73,17 @@ class FactorBacktestConfig:
         """
         获取回测结束日期
         
-        优先使用自定义日期，否则使用当前日期
+        优先使用自定义日期，否则使用当前日期减去最大持有期天数
+        （确保有足够的未来数据计算未来收益率）
         """
         if cls._custom_end_date:
             return cls._custom_end_date
-        return datetime.now().strftime('%Y%m%d')
+        
+        # 当前日期减去最大持有期天数（确保有足够的未来数据）
+        max_holding_period = max(cls.HOLDING_PERIODS)  # 如 20 天
+        buffer_days = 5  # 额外预留 5 天缓冲
+        end_date = datetime.now() - timedelta(days=max_holding_period + buffer_days)
+        return end_date.strftime('%Y%m%d')
     
     @classmethod
     def set_date_range(cls, start_date: str, end_date: str) -> None:

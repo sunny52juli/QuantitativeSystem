@@ -202,12 +202,37 @@ class FactorMiningFramework:
             data_reset['pct_change'] = data_reset.groupby('ts_code')['close'].pct_change()
         
         # 计算不同持有期的未来收益率（按股票分组）
-        print(f"📊 计算未来收益率，持有期: {self.holding_periods}")
+        print(f"📊 计算未来收益率，持有期：{self.holding_periods}")
+                
+        # 诊断信息：检查数据范围
+        data_reset_copy = data_reset.copy()
+        date_range = data_reset_copy['trade_date'].unique()
+        if len(date_range) > 0:
+            min_date = pd.to_datetime(date_range.min())
+            max_date = pd.to_datetime(date_range.max())
+            print(f"   📅 数据范围：{min_date.strftime('%Y%m%d')} ~ {max_date.strftime('%Y%m%d')}")
+            print(f"   📅 总交易日数：{len(date_range)}")
+            
+            # 理论上有数据的日期范围
+            print(f"\n   📊 理论有效样本分析：")
+            for period in self.holding_periods:
+                # 对于持有期 N，最后 N 个交易日的数据会是 NaN
+                last_n_dates = sorted(date_range)[-period:] if len(date_range) >= period else []
+                valid_dates = len(date_range) - len(last_n_dates)
+                print(f"   📅 {period}日持有期：最后{period}天无数据 → 有效交易日={valid_dates}/{len(date_range)} ({valid_dates/len(date_range)*100:.1f}%)")
+                print(f"      无效日期范围：{pd.to_datetime(last_n_dates[0]).strftime('%Y%m%d') if last_n_dates else 'N/A'} ~ {pd.to_datetime(last_n_dates[-1]).strftime('%Y%m%d') if last_n_dates else 'N/A'}")
+                
         for period in self.holding_periods:
             ret_col = f'ret_{period}d'
             if ret_col not in data_reset.columns:
-                # 计算period天后的收益率
+                # 计算 period 天后的收益率
                 data_reset[ret_col] = data_reset.groupby('ts_code')['close'].pct_change(period).shift(-period)
+                        
+                # 诊断：统计每个持有期的有效样本数
+                valid_count = data_reset[ret_col].notna().sum()
+                nan_count = data_reset[ret_col].isna().sum()
+                total = len(data_reset)
+                print(f"   📊 {ret_col}: 有效={valid_count:,}, 缺失={nan_count:,} ({nan_count/total*100:.1f}%)")
         
         # 默认使用1日收益率作为ret列（向后兼容）
         if 'ret' not in data_reset.columns:
@@ -352,10 +377,33 @@ class FactorMiningFramework:
                 print(f"⚠️ 未找到 {return_col} 列，使用默认的 ret 列")
                 return_col = 'ret'
         
-        print(f"📊 回测配置: 分组数={n_groups}, 持有期={holding_period}天, 收益率列={return_col}")
+        print(f"📊 回测配置：分组数={n_groups}, 持有期={holding_period}天，收益率列={return_col}")
+                
+        # 诊断：检查删除缺失值前后的样本数
+        total_before = len(df)
+        missing_factor = df[factor_name].isna().sum()
+        missing_return = df[return_col].isna().sum()
+        print(f"   📊 回测前总样本：{total_before:,}")
+        print(f"   📊 因子值缺失：{missing_factor:,} ({missing_factor/total_before*100:.1f}%)")
+        print(f"   📊 收益率缺失：{missing_return:,} ({missing_return/total_before*100:.1f}%)")
+        
+        # 分别统计只缺失因子、只缺失收益、两者都缺失的数量
+        only_missing_factor = ((df[factor_name].isna()) & (df[return_col].notna())).sum()
+        only_missing_return = ((df[factor_name].notna()) & (df[return_col].isna())).sum()
+        both_missing = (df[factor_name].isna() & df[return_col].isna()).sum()
+        print(f"   📊 仅因子值缺失：{only_missing_factor:,}")
+        print(f"   📊 仅收益率缺失：{only_missing_return:,}")
+        print(f"   📊 两者都缺失：{both_missing:,}")
         
         # 删除缺失值
         df = df.dropna(subset=[factor_name, return_col])
+        total_after = len(df)
+        print(f"   📊 回测有效样本：{total_after:,} (删除 {total_before-total_after:,}, {(total_before-total_after)/total_before*100:.1f}%)")
+        
+        # 如果有效样本太少，打印警告
+        if total_after < total_before * 0.5:
+            print(f"   ⚠️ 警告：超过 50% 的样本被删除！")
+            print(f"   💡 建议：检查因子计算逻辑或数据质量")
         
         # 按日期分组，对因子进行排名分组
         df['factor_group'] = df.groupby('trade_date')[factor_name].transform(

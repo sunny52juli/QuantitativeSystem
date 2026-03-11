@@ -66,7 +66,7 @@ __all__ = [
 # ==================== 辅助函数 ====================
 
 
-def run_factor_mining(strategy: str, strategy_name: str, n_factors: int, api_key: str, data=None, use_llm_optimization=True):
+def run_factor_mining(strategy: str, strategy_name: str, n_factors: int, api_key: str, data=None):
     """
     运行因子挖掘流程（新工作流）
     
