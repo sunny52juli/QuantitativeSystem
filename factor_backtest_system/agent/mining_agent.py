@@ -43,7 +43,7 @@ from factor_backtest_system.backtest.factor_loader import FactorScriptExecutor, 
 from factor_backtest_system.backtest.backtest_report import print_single_factor_detail
 from datamodule.factor_data_loader import FactorDataLoader
 from core.mcp.tools_selection import select_relevant_tools, load_mcp_tools
-from factor_backtest_system.prompt.factor_prompts import get_message
+from factor_backtest_system.prompt.system_prompts import get_message
 from factor_backtest_system.agent.rule_based_optimizer import generate_rule_based_suggestions
 from factor_backtest_system.agent.llm_optimizer import LLMFactorOptimizer, optimize_factor_with_llm
 from config import FactorBacktestConfig

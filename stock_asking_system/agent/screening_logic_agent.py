@@ -51,33 +51,10 @@ class ScreeningLogicAgent(LoggerMixin):
     
     改进：
     - LLM 配置从 StockQueryConfig 读取，不接受外部参数传递
-    - 使用 Prompt 模板管理器管理系统提示词
+    - Prompt 模板管理器从 user_config 加载模板
     - 集成日志系统
     - 使用自定义异常类
     """
-    
-    # 系统 Prompt 模板（当模板文件不存在时使用）
-    _DEFAULT_SYSTEM_PROMPT = """你是一个专业的量化分析师，擅长将自然语言查询转换为技术指标筛选逻辑。
-
-你的任务是：根据用户的股票查询需求，生成一个JSON格式的筛选逻辑。
-
-可用的数据字段（必须使用英文字段名）：
-- 价格字段：open(开盘价), high(最高价), low(最低价), close(收盘价), pre_close(前收盘)
-- 成交字段：vol(成交量), amount(成交额)
-- 其他字段：turnover_rate(换手率), pe(市盈率), pb(市净率), ps(市销率), total_mv(总市值)
-
-可用的MCP工具（部分）：
-${tools_desc}
-
-🚨🚨🚨 **数据中的实际行业列表（共 ${industry_count} 个行业）**：
-${industries_desc}
-
-🚨 **最重要的规则（必须遵守）**：
-1. **行业名称必须严格从上述"数据中的实际行业列表"中逐字复制，禁止自行拼写或凭记忆填写**
-2. **如果查询中提到行业、板块、市场等信息，必须优先使用 filter_by_industry 或 filter_by_market 工具**
-3. **如果用户指定了多个行业，需要分别使用多个 filter_by_industry 工具，然后用 | 合并**
-
-请直接输出JSON，不要添加任何解释文字。"""
     
     def __init__(self, prompt_manager: Optional[PromptManager] = None):
         """
@@ -175,7 +152,7 @@ ${industries_desc}
             content = response.choices[0].message.content.strip()
             self.logger.debug(f"LLM响应: {content[:200]}...")
             
-            # 提取JSON（可能被markdown代码块包裹）
+            # 提取JSON（可能被代码块包裹）
             json_str = self._extract_json(content)
             
             # 解析JSON
@@ -208,8 +185,8 @@ ${industries_desc}
         Returns:
             JSON字符串
         """
-        # 尝试提取markdown代码块中的JSON
-        json_match = re.search(r'```json\s*(.*?)\s*```', content, re.DOTALL)
+        # 尝试提取代码块中的JSON
+        json_match = re.search(r'``json\s*(.*?)\s*```', content, re.DOTALL)
         if json_match:
             return json_match.group(1)
         
@@ -223,9 +200,7 @@ ${industries_desc}
     
     def _build_system_prompt(self, relevant_tools: List[ToolSpec]) -> str:
         """
-        构建系统提示词
-        
-        优先从模板文件加载，如果失败则使用内置默认模板。
+        构建系统提示词（从 user_config.SCREENING_SYSTEM_PROMPT 加载）
         
         Args:
             relevant_tools: 相关工具列表
@@ -233,13 +208,13 @@ ${industries_desc}
         Returns:
             系统提示词字符串
         """
-        # 构建工具描述
+        # 准备工具描述（安全访问字段）
         tools_desc = "\n".join([
-            f"- {tool['function']['name']}: {tool['function'].get('description', '')[:100]}"
-            for tool in relevant_tools[:20]  # 限制工具数量，避免prompt过长
+            f"- {tool.get('name', tool.get('tool', 'unknown'))}: {tool.get('description', tool.get('desc', '无描述'))}"
+            for tool in relevant_tools
         ])
         
-        # 构建可用行业列表（最多显示100个，避免prompt过长）
+        # 构建可用行业列表（最多显示 100 个，避免 prompt 过长）
         industries_sample = (
             self.available_industries[:100] 
             if len(self.available_industries) > 100 
@@ -254,16 +229,12 @@ ${industries_desc}
             'industries_desc': industries_desc,
         }
         
-        # 尝试从模板文件加载
-        try:
-            return self._prompt_manager.render('screening_system', **template_vars)
-        except FileNotFoundError:
-            self.logger.warning("未找到screening_system模板，使用内置默认模板")
-            # 使用内置默认模板
-            from string import Template
-            template = Template(self._DEFAULT_SYSTEM_PROMPT)
-            return template.safe_substitute(**template_vars)
-    
+        # 直接使用 user_config 中的模板（不再尝试从文件加载）
+        from stock_asking_system.prompt.user_config import SCREENING_SYSTEM_PROMPT
+        from string import Template
+        template = Template(SCREENING_SYSTEM_PROMPT)
+        return template.safe_substitute(**template_vars)
+
     def _validate_screening_logic(self, screening_logic: ScreeningLogic) -> bool:
         """
         验证筛选逻辑的格式

@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 from factor_backtest_system.backtest.factor_backtest import FactorMiningFramework
 from core.mcp.expression_tools import ExpressionParser, NamespaceBuilder
-from factor_backtest_system.prompt.factor_prompts import (
+from factor_backtest_system.prompt.system_prompts import (
     AIFactorMinerPrompts,
     get_system_prompt,
     get_user_prompt,

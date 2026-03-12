@@ -18,7 +18,7 @@ import pandas as pd
 from core.logger import get_logger
 from core.mcp.expression_tools import ExpressionParser, NamespaceBuilder
 from core.mcp.tool_implementations import execute_tool
-from factor_backtest_system.prompt.factor_prompts import (
+from factor_backtest_system.prompt.system_prompts import (
     get_system_prompt,
     get_user_prompt,
     get_message

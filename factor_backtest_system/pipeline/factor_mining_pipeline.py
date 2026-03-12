@@ -19,7 +19,7 @@ from factor_backtest_system.agent.ai_factor_agent import AIFactorMiner
 from datamodule import FactorDataLoader
 
 # 从配置模块导入
-from factor_backtest_system.prompt.factor_prompts import StrategyPrompts, get_message
+from factor_backtest_system.prompt.system_prompts import StrategyPrompts, get_message
 
 
 # ==================== 便捷函数 ====================

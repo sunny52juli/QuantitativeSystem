@@ -7,23 +7,20 @@
     <list default="true" id="6a65fb83-799f-488a-9e47-69186f138516" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/factor_backtest_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/factor_backtest_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/mcp/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/mcp/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/mcp/expression_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/mcp/expression_tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/skill/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/core/skill/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/agent/ai_factor_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/agent/ai_factor_agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/backtest/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/backtest/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/backtest/factor_backtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/factor_scripts/近日强势股票_强势股综合因子_20260302_235407.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/generators/factor_script_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/generators/factor_script_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260301_205100.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260303_000414.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/backtest/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/backtest/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/backtest/run_script_backtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/pipeline/stock_query_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/pipeline/stock_query_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/run_stock_query.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/run_stock_query.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/generators/factor_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/generators/factor_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/pipeline/factor_mining_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/pipeline/factor_mining_pipeline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/prompt/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/factor_config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/factor_prompts.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_asking_system/agent/screening_logic_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/agent/screening_logic_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260311_231459.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260311_231636.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/prompt/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/asking_config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/asking_prompts.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/screening_system.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +123,7 @@
     "Python.放量突破股票_20260219_213911.executor": "Run",
     "Python.放量突破股票_20260301_205100.executor": "Run",
     "Python.放量突破股票_20260303_000414.executor": "Run",
+    "Python.放量突破股票_20260311_231636.executor": "Run",
     "Python.近日强势股票_低波动强势动量因子_20260220_221810.executor": "Debug",
     "Python.近日强势股票_强势股综合因子_20260215_222330.executor": "Debug",
     "Python.近日强势股票_强势股综合因子_20260302_221520.executor": "Debug",
@@ -167,7 +165,53 @@
       <recent name="D:\code\QuantitativeSystem\agents\core" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.run_script_backtest">
+  <component name="RunManager" selected="Python.run_stock_query">
+    <configuration name="放量突破股票_20260311_231636" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system/asking_scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260311_231636.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TradeAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data2parquet" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data2parquet/data_generator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="run_factor_mining" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TradeAgent" />
       <option name="ENV_FILES" value="" />
@@ -183,29 +227,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/run_factor_mining.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="run_scrip_backtest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="TradeAgent" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/factor_backtest_system/backtest" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/factor_backtest_system/backtest/run_scrip_backtest.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -260,36 +281,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="run_stock_query_fixed" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="TradeAgent" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/stock_asking_system" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/stock_asking_system/run_stock_query_fixed.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.run_script_backtest" />
         <item itemvalue="Python.run_stock_query" />
         <item itemvalue="Python.run_factor_mining" />
-        <item itemvalue="Python.run_scrip_backtest" />
-        <item itemvalue="Python.run_stock_query_fixed" />
+        <item itemvalue="Python.run_script_backtest" />
+        <item itemvalue="Python.放量突破股票_20260311_231636" />
+        <item itemvalue="Python.data_generator" />
       </list>
     </recent_temporary>
   </component>
