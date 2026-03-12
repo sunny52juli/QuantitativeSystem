@@ -178,7 +178,7 @@ QuantitativeSystem/
 
 ### 工作流程
 
-### 因子回测系统工作流程（新）
+#### 因子回测系统工作流程
 
 ```
 用户输入策略描述
@@ -288,7 +288,10 @@ python data2parquet/data_fetcher.py
 #### 运行因子回测系统
 
 ```bash
+# 因子挖掘完整模式
 python factor_backtest_system/run_factor_mining.py
+# 仅回测模式（回测已有脚本）
+python factor_backtest_system/backtest/run_scrip_backtest.py
 ```
 
 系统会自动：
@@ -303,47 +306,13 @@ python factor_backtest_system/run_factor_mining.py
 # 完整模式（生成 + 筛选 + 回测）
 python stock_asking_system/run_stock_query.py
 
-# 演示模式（运行3个示例查询）
-python stock_asking_system/run_stock_query.py demo
-
 # 仅回测模式（回测已有脚本）
-python stock_asking_system/run_stock_query.py backtest
+python stock_asking_system/backtest/run_scrip_backtest.py
 ```
 
 ---
 
-## 📖 详细使用指南
 
-### 因子回测系统
-
-#### 基本使用
-
-```python
-from factor_backtest_system import create_factor_miner
-
-# 创建因子挖掘器
-miner = create_factor_miner()
-
-# 定义策略
-strategy = """
-生成近日强势股票的因子，重点关注：
-1. 最近5日涨幅较大
-2. 成交量放大
-3. 突破关键技术位
-4. 均线发散
-"""
-
-# 运行完整流程
-result = miner.run_complete_pipeline(
-    strategy=strategy,
-    n_factors=3,
-    strategy_name="近日强势股票"
-)
-
-# 查看结果
-print(f"生成因子数量: {len(result['factors'])}")
-print(f"生成脚本数量: {len(result['script_paths'])}")
-```
 
 #### 预定义策略模板
 
@@ -365,12 +334,6 @@ custom_strategy = """
 3. ROE > 15%
 4. 近期股价稳定
 """
-
-result = miner.run_complete_pipeline(
-    strategy=custom_strategy,
-    n_factors=5,
-    strategy_name="低估值高成长"
-)
 ```
 
 #### 回测配置
@@ -473,644 +436,12 @@ python factor_scripts/近日强势股票_factor_1_20240101.py
 
 预期改进：修正核心错误后，预期年化收益率可提升至 11-13%，夏普比率维持 2.5+；
           完成全部优化后，目标年化收益率 14-16%，夏普比率 3.0+，最大回撤控制在 -1.5% 以内
-```
-
----
-
-#### 基本使用
-
-```python
-from stock_asking_system import create_stock_query_pipeline
-
-# 创建查询管道
-pipeline = create_stock_query_pipeline()
-
-# 执行查询（完整流程：生成脚本 + 筛选 + 回测）
-result = pipeline.run_complete_pipeline(
-    query="找出通信设备行业中放量上涨的股票",
-    top_n=20,
-    holding_periods=[1, 5]
-)
-
-# 查看结果
-print(f"筛选到 {len(result['candidates'])} 只股票")
-print(f"脚本路径: {result['script_path']}")
-```
-
-#### 仅筛选（不计算收益率）
-
-```python
-# 快速筛选，不生成脚本，不计算收益率
-candidates = pipeline.query(
-    query="市盈率低于20且换手率大于5%的股票",
-    top_n=30
-)
-
-for stock in candidates:
-    print(f"{stock['name']} ({stock['ts_code']}): {stock['confidence']:.2%}")
-```
-
-#### 回测已有脚本
-
-```
-from stock_asking_system.pipeline import backtest_asking_scripts
-
-# 回测所有已生成的脚本
-result = backtest_asking_scripts(
-    holding_periods=[1, 5],
-    top_n=20,
-    verbose=True
-)
-
-# 查看汇总
-for summary in result['summary']:
-    print(f"{summary['logic_name']}: {summary['stock_count']}只股票")
-```
-
-#### 查询配置
-
-在 `config/stock_query_config.py` 中配置：
-
-```python
-class StockQueryConfig:
-    # 默认返回股票数量
-    DEFAULT_TOP_N = 20
-    
-    # 置信度阈值
-    MIN_CONFIDENCE = 0.3
-    
-    # 持有期配置（天数）
-    HOLDING_PERIODS = [1, 5]
-    
-    # 数据获取配置
-    DEFAULT_LOOKBACK_DAYS = 60  # 最近60个交易日
-```
-
-#### 查询示例
-
-系统支持多种自然语言查询：
-
-```
-# 行业筛选
-"通信设备行业中市值最大的 10 只股票"
-
-# 技术指标
-"最近 5 日放量且突破 20 日均线的股票"
-
-# 估值指标
-"市盈率低于 15 且市净率低于 2 的股票"
-
-# 组合条件
-"电子行业中，市盈率低于 30，换手率大于 3%，均线多头排列，最近涨幅超过 5% 的股票"
-
-# 排名筛选
-"按照成交额排名前 20 的股票"
-```
-
-#### 运行实例
-
-以下是"找出最近放量突破的股票"查询的完整输出示例：
-
-**查询配置**：
-```
-查询：找出最近放量突破的股票：
-    1. 成交量较前期放大（至少 1.5 倍）
-    2. 涨幅>3%
-    3. 技术形态良好
-    
-返回数量：20
-持有期：[1, 5] 天
-```
-
-**筛选逻辑详情**：
-```
-表达式：(vol > vol_ma20 * 1.5) & (pct_1d > 0.03) & (ma5 > ma20)
-置信度公式：(vol / vol_ma20) * (pct_1d) * ((ma5 - ma20) / ma20)
-工具调用:
-   1. vol_ma20 = rolling_mean({'values': 'vol', 'window': 20})
-   2. pct_1d = pct_change({'values': 'close', 'periods': 1})
-   3. ma5 = rolling_mean({'values': 'close', 'window': 5})
-   4. ma20 = rolling_mean({'values': 'close', 'window': 20})
-```
-
-**回测详情**：
-```
-筛选日：20260304
-筛选结果：20 只股票
-
-    持有期       平均收益        中位数        标准差        最小值        最大值       胜率      有效/总数
-   ----------------------------------------------------------------------------------------------
-       1 天      -0.58%      -2.67%       8.07%     -10.03%      20.02%     40.0%       20/20
-       5 天       0.16%      -1.92%      16.76%     -21.09%      52.39%     40.0%       20/20
-
-   排名    代码           名称                    置信度       1 日收益       5 日收益
-   ----------------------------------------------------------------------------------------
-   1     603318.SH      水发燃气                     53.34%       -10.03%       -12.56%
-   2     001896.SZ      豫能控股                     52.75%         1.26%        16.34%
-   3     300164.SZ      通源石油                     51.93%        -8.75%       -19.26%
-   4     301373.SZ      凌玮科技                     51.91%        17.38%        52.39%
-   5     688297.SH      中无人机                     51.77%        -3.42%       -13.62%
-   6     000890.SZ      法尔胜                      51.76%         3.16%         3.27%
-   7     300617.SZ      安靠智电                     51.60%         0.45%         5.31%
-   8     300880.SZ      迦南智能                     51.53%         5.12%        11.93%
-   9     300303.SZ      聚飞光电                     51.47%        20.02%         4.50%
-   10    600108.SH      亚盛集团                     51.41%        -5.10%        24.20%
-   11    688551.SH      科威尔                      51.37%        -6.33%        -5.51%
-   12    301302.SZ      华如科技                     51.33%        -9.95%       -14.37%
-   13    002378.SZ      章源钨业                     51.28%        -7.07%        -2.42%
-   14    603530.SH      神马电力                     51.11%         6.35%         2.83%
-   15    301120.SZ      新特电气                     51.00%        -3.09%        -0.18%
-   16    002272.SZ      川润股份                     50.98%        -0.28%        -1.80%
-   17    002207.SZ      准油股份                     50.92%        -6.85%       -21.09%
-   18    000010.SZ      美丽生态                     50.92%        -2.26%        -2.04%
-   19    600714.SH      金瑞矿业                     50.84%         4.30%        -5.17%
-   20    600871.SH      石化油服                     50.82%        -6.56%       -19.44%
 ```
 
 ---
 
 ### 股票查询系统
 
-```
-# QuantitativeSystem - AI驱动的量化交易系统
-
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-
-一个基于AI大模型的智能量化交易系统，包含**因子回测系统**和**股票查询系统**两大核心模块。系统利用LLM（大语言模型）自动生成量化因子和股票筛选逻辑，并提供完整的回测和评估功能。
-
----
-
-## 📋 目录
-
-- [系统概述](#系统概述)
-- [核心功能](#核心功能)
-- [系统架构](#系统架构)
-- [快速开始](#快速开始)
-- [详细使用指南](#详细使用指南)
-  - [因子回测系统](#因子回测系统)
-  - [股票查询系统](#股票查询系统)
-- [配置说明](#配置说明)
-- [模块详解](#模块详解)
-- [开发指南](#开发指南)
-- [常见问题](#常见问题)
-- [更新日志](#更新日志)
-
----
-
-## 🎯 系统概述
-
-**QuantitativeSystem** 是一个创新的量化交易系统，将人工智能与量化投资深度结合：
-
-### 系统一：因子回测系统 (Factor Backtest System)
-
-**主函数**: `factor_backtest_system/run_factor_mining.py`
-
-利用AI自动挖掘和生成量化因子，并进行历史回测验证。系统能够：
-- 🤖 根据策略描述自动生成量化因子
-- 📊 生成可执行的因子计算脚本
-- 📈 对因子进行多持有期回测
-- 💡 提供因子优化建议
-
-### 系统二：股票查询系统 (Stock Asking System)
-
-**主函数**: `stock_asking_system/run_stock_query.py`
-
-将自然语言查询转换为股票筛选逻辑，智能筛选符合条件的股票。系统能够：
-- 🔍 理解自然语言查询意图
-- 🎯 生成精确的筛选逻辑脚本
-- 📊 执行股票筛选并计算收益率
-- 📈 评估筛选策略的有效性
-
----
-
-## ✨ 核心功能
-
-### 因子回测系统核心功能
-
-1. **AI 因子生成**（AIFactorMiner）
-   - 基于策略描述自动生成量化因子
-   - 调用 LLM API 进行深度分析
-   - 智能选择相关的技术指标和工具
-   - 支持工具调用链执行
-
-2. **流程协调**（FactorMiningAgent）
-   - 管理数据加载和组件生命周期
-   - 协调整个因子挖掘流程
-   - 生成因子脚本文件
-   - 组织优化建议输出
-
-3. **因子脚本化**（FactorScriptGenerator）
-   - 将因子定义转换为可执行 Python 脚本
-   - 脚本可独立运行，便于调试和复用
-   - 自动保存到 `factor_scripts/` 目录
-
-4. **多维度回测**（FactorMiningFramework）
-   - 支持多个持有期同时回测（1 日、5 日、20 日等）
-   - 计算年化收益率、夏普比率、最大回撤等指标
-   - 分组回测，评估因子区分度
-
-5. **智能优化建议**
-   - **LLM 模式**（LLMFactorOptimizer）：基于大模型的深度优化分析
-   - **规则模式**（RuleBasedFactorOptimizer）：基于规则的降级方案
-   - 分析因子表现并生成优化建议
-   - 识别因子的优势和不足
-
-### 股票查询系统核心功能
-
-1. **自然语言理解**
-   - 将用户查询转换为结构化筛选逻辑
-   - 智能识别行业、指标、条件等要素
-   - 支持复杂的组合查询
-
-2. **筛选逻辑生成**
-   - 生成JSON格式的筛选逻辑
-   - 自动生成可执行的筛选脚本
-   - 保存到 `asking_scripts/` 目录
-
-3. **股票筛选执行**
-   - 基于生成的逻辑筛选股票
-   - 计算置信度评分
-   - 提供筛选理由说明
-
-4. **收益率回测**
-   - 计算筛选股票的未来收益率
-   - 支持多个持有期（1日、5日等）
-   - 统计平均收益、胜率等指标
-
----
-
-## 🏗️ 系统架构
-
-### 整体架构
-
-```
-QuantitativeSystem/
-├── factor_backtest_system/    # 因子回测系统
-│   ├── agent/                  # AI Agent 模块
-│   │   ├── ai_factor_agent.py  # LLM Agent（调用 API 生成因子）
-│   │   ├── mining_agent.py     # 流程协调代理
-│   │   ├── llm_optimizer.py    # LLM 优化器
-│   │   └── rule_based_optimizer.py  # 规则优化器（降级方案）
-│   ├── backtest/               # 回测引擎
-│   ├── generators/             # 脚本生成器
-│   ├── pipeline/               # 流程管道（调用入口）
-│   ├── prompt/                 # 提示词配置
-│   ├── tools/                  # 工具函数
-│   ├── factor_scripts/         # 生成的因子脚本
-│   └── run_factor_mining.py    # 主入口
-│
-├── stock_asking_system/        # 股票查询系统
-│   ├── agent/                  # AI Agent（筛选逻辑生成）
-│   ├── backtest/               # 回测模块
-│   ├── generators/             # 脚本生成器
-│   ├── pipeline/               # 流程管道
-│   ├── prompt/                 # 提示词配置
-│   ├── tools/                  # 筛选工具
-│   ├── asking_scripts/         # 生成的筛选脚本
-│   └── run_stock_query.py      # 主入口
-│
-├── core/                       # 核心功能模块
-│   ├── mcp/                    # MCP 工具管理 🆕 重构升级版
-│   │   ├── utils.py            # 公共工具函数 (DataAdapter, ExpressionHelpers)
-│   │   ├── exceptions.py       # 统一异常处理 (装饰器、错误码)
-│   │   ├── mcp_config.py       # 配置管理 (MCPConfig, 工具分类)
-│   │   ├── skill_validator.py  # 技能验证器 (因子定义验证)
-│   │   ├── tools_selection.py  # 智能工具选择
-│   │   ├── tool_implementations.py  # MCP 工具实现
-│   │   ├── expression_tools.py # 表达式工具
-│   │   └── QUICK_REFERENCE.md  # 快速参考指南
-│   ├── skill/                  # 技能系统
-│   ├── base_messages.py        # 消息基类
-│   ├── exceptions.py           # 异常定义
-│   ├── logger.py               # 日志系统
-│   ├── path_manager.py         # 路径管理
-│   └── prompt_manager.py       # 提示词管理
-│
-├── datamodule/                 # 数据加载模块
-│   ├── base_loader.py          # 基础加载器
-│   ├── factor_data_loader.py   # 因子数据加载
-│   └── stock_data_loader.py    # 股票数据加载
-│
-├── data2parquet/               # 数据获取与转换
-│   ├── data_fetcher.py         # 数据获取
-│   ├── data_generator.py       # 数据生成
-│   ├── data_interface.py       # 数据接口
-│   └── data_saver.py           # 数据保存
-│
-├── config/                     # 配置管理
-│   ├── api.py                  # API 配置
-│   ├── data_fields.py          # 数据字段定义
-│   ├── data_path.py            # 数据路径配置
-│   ├── factor_backtest_config.py  # 因子回测配置
-│   ├── stock_query_config.py   # 股票查询配置
-│   └── tool_config.py          # 工具配置
-│
-├── .env.example                # 环境变量示例
-└── README.md                   # 本文件
-```
-
-### 工作流程
-
-### 因子回测系统工作流程（新）
-
-```
-用户输入策略描述
-        ↓
-   FactorMiningAgent（流程协调与数据管理）
-        ↓
-   AIFactorMiner（LLM Agent 调用 API）
-        ↓
-   生成因子定义（包含工具链和表达式）
-        ↓
-   FactorScriptGenerator（生成脚本） → factor_scripts/
-        ↓
-   加载历史数据（支持预加载优化）
-        ↓
-   FactorScriptExecutor（执行计算）
-        ↓
-   计算多持有期收益率（预计算优化）
-        ↓
-   多持有期回测（1 日、5 日、20 日等）
-        ↓
-   LLMFactorOptimizer（可选：深度优化分析）
-        ↓
-   输出结构化报告（汇总 + 详情）
-```
-
-#### 股票查询系统工作流程
-
-```
-用户输入自然语言查询
-        ↓
-   AI Agent理解意图
-        ↓
-   生成筛选逻辑JSON
-        ↓
-   生成筛选脚本 → asking_scripts/
-        ↓
-   加载市场数据
-        ↓
-   执行股票筛选
-        ↓
-   计算置信度评分
-        ↓
-   计算未来收益率
-        ↓
-   输出筛选报告
-```
-
----
-
-## 🚀 快速开始
-
-### 环境要求
-
-- Python 3.8+
-- 依赖库：pandas, numpy, openai, tushare, python-dotenv 等
-
-### 安装步骤
-
-1. **克隆项目**
-
-```bash
-git clone <repository-url>
-cd QuantitativeSystem
-```
-
-2. **安装依赖**
-
-```bash
-pip install pandas numpy openai tushare python-dotenv
-```
-
-3. **配置环境变量**
-
-复制 `.env.example` 为 `.env` 并配置：
-
-```bash
-cp .env.example .env
-```
-
-编辑 `.env` 文件：
-
-```env
-# DeepSeek API配置（或其他兼容OpenAI的API）
-DEFAULT_API_KEY=your-api-key-here
-DEFAULT_MODEL=deepseek-chat
-DEFAULT_API_URL=https://api.deepseek.com/v1/chat/completions
-
-# Tushare配置（可选，用于数据获取）
-TUSHARE_TOKEN=your-tushare-token
-
-# 模型参数
-MAX_ITERATIONS=5
-MAX_TOKENS=4096
-TEMPERATURE=0.7
-```
-
-4. **准备数据**
-
-确保在 `data2parquet/tushare_data/` 目录下有历史数据文件，或运行数据获取脚本：
-
-```bash
-python data2parquet/data_fetcher.py
-```
-
-### 快速运行
-
-#### 运行因子回测系统
-
-```bash
-python factor_backtest_system/run_factor_mining.py
-```
-
-系统会自动：
-- 读取预定义的策略模板
-- 为每个策略生成因子
-- 执行回测并输出结果
-- 保存因子脚本到 `factor_scripts/` 目录
-
-#### 运行股票查询系统
-
-```bash
-# 完整模式（生成 + 筛选 + 回测）
-python stock_asking_system/run_stock_query.py
-
-# 演示模式（运行3个示例查询）
-python stock_asking_system/run_stock_query.py demo
-
-# 仅回测模式（回测已有脚本）
-python stock_asking_system/run_stock_query.py backtest
-```
-
----
-
-## 📖 详细使用指南
-
-### 因子回测系统
-
-#### 基本使用
-
-```python
-from factor_backtest_system import create_factor_miner
-
-# 创建因子挖掘器
-miner = create_factor_miner()
-
-# 定义策略
-strategy = """
-生成近日强势股票的因子，重点关注：
-1. 最近5日涨幅较大
-2. 成交量放大
-3. 突破关键技术位
-4. 均线发散
-"""
-
-# 运行完整流程
-result = miner.run_complete_pipeline(
-    strategy=strategy,
-    n_factors=3,
-    strategy_name="近日强势股票"
-)
-
-# 查看结果
-print(f"生成因子数量: {len(result['factors'])}")
-print(f"生成脚本数量: {len(result['script_paths'])}")
-```
-
-#### 预定义策略模板
-
-系统内置多个策略模板，在 `factor_backtest_system/prompt/user_prompt/strategy_configs.py` 中定义：
-
-- **近日强势股票**: 关注短期涨幅和成交量
-- **价值投资**: 关注估值指标和基本面
-- **成长股**: 关注业绩增长和市场热度
-- **技术突破**: 关注技术形态和突破信号
-
-#### 自定义策略
-
-```python
-# 自定义策略描述
-custom_strategy = """
-生成低估值高成长的因子，重点关注：
-1. PE < 20，PB < 3
-2. 营收增长率 > 20%
-3. ROE > 15%
-4. 近期股价稳定
-"""
-
-result = miner.run_complete_pipeline(
-    strategy=custom_strategy,
-    n_factors=5,
-    strategy_name="低估值高成长"
-)
-```
-
-#### 回测配置
-
-在 `config/factor_backtest_config.py` 中配置：
-
-```python
-class FactorBacktestConfig:
-    # 每次生成的因子数量
-    n_factors = 3
-    
-    # 持有期配置（天数）
-    HOLDING_PERIODS = [1, 5, 20]
-    
-    # 回测时间范围
-    DEFAULT_LOOKBACK_DAYS = 90  # 最近90天
-    
-    # 股票池配置
-    DEFAULT_INDEX_CODE = None  # None表示全市场
-    STOCK_POOL_EXCLUDE_ST = True  # 排除ST股票
-    STOCK_POOL_MIN_LIST_DAYS = 180  # 最少上市天数
-```
-
-#### 独立运行因子脚本
-
-生成的因子脚本可以独立运行：
-
-```bash
-# 运行特定日期的因子计算
-python factor_scripts/近日强势股票_factor_1_20240101.py 20240315
-
-# 不指定日期则使用最新数据
-python factor_scripts/近日强势股票_factor_1_20240101.py
-```
-
-#### 运行实例
-
-以下是生成"近日强势股票"因子的完整输出示例：
-
-**策略配置**：
-```
-策略：生成近日强势股票的因子，重点关注：
-1. 短期动量（5-10 日收益率）
-2. 价格突破（相对高点位置）
-3. 成交量配合（量价齐升）
-4. 技术指标强势（RSI、MACD 等）
-5. 波动率特征（强势股的波动特性）
-
-目标数量：1
-```
-
-**生成的因子**：
-```
-1. 强势股综合因子
-   工具步骤：3 步
-      - pct_change({'values': '收盘价', 'periods': 10})
-      - rsi({'values': '收盘价', 'window': 14})
-      - correlation({'x': 'mom_10', 'y': 'vol', 'window': 10})
-   表达式：(mom_10 + (rsi_14 - 50) / 50 + mom_vol_corr) / 3
-   逻辑：综合短期动量、RSI 强度及量价相关性。动量捕捉趋势，RSI 衡量超买超卖，
-        量价相关性确保上涨有成交量配合，三者等权合成强势股因子。
-```
-
-**回测结果**：
-```
-因子详情：强势股综合因子
-================================================================================
-
-持有期：1 天
-   - 信号明确度：高
-   - 数据完整性：98.5%
-   - 计算成功率：100%
-
-持有期：5 天
-   - 年化收益率：12.45%
-   - 夏普比率：2.683
-   - 最大回撤：-4.32%
-   - 胜率：62.00%
-
-持有期：20 天
-   - 年化收益率：8.32%
-   - 夏普比率：1.259
-   - 最大回撤：-6.88%
-   - 胜率：56.00%
-```
-
-**迭代优化计划**：
-```
-下一步行动:
-   • 第一步：修正量价相关性逻辑并回测，验证基础改进效果
-   • 第二步：测试不同参数组合（动量 5/10/20 天，RSI 6/12/24 天），寻找最优周期
-   • 第三步：实现动态加权方案（基于滚动 20 日 ICIR 计算权重），对比静态加权
-   • 第四步：加入行业市值中性化，测试纯 Alpha 表现
-   • 第五步：考虑增加反转保护（如 RSI>70 时降低动量权重）
-
-参数测试:
-   • 测试 1：mom=[5,10,15], rsi=[6,12,18], corr_window=[5,10,15] 全组合
-   • 测试 2：权重组合：进攻型 (0.5,0.3,0.2)、平衡型 (0.4,0.3,0.3)、保守型 (0.3,0.4,0.3)
-   • 测试 3：动态加权：基于过去 20 日 ICIR 计算权重，衰减半衰期 5-20 日
-
-预期改进：修正核心错误后，预期年化收益率可提升至 11-13%，夏普比率维持 2.5+；
-          完成全部优化后，目标年化收益率 14-16%，夏普比率 3.0+，最大回撤控制在 -1.5% 以内
-```
-
----
-
 #### 基本使用
 
 ```python
@@ -1128,37 +459,7 @@ result = pipeline.run_complete_pipeline(
 
 # 查看结果
 print(f"筛选到 {len(result['candidates'])} 只股票")
-print(f"脚本路径: {result['script_path']}")
-```
-
-#### 仅筛选（不计算收益率）
-
-```python
-# 快速筛选，不生成脚本，不计算收益率
-candidates = pipeline.query(
-    query="市盈率低于20且换手率大于5%的股票",
-    top_n=30
-)
-
-for stock in candidates:
-    print(f"{stock['name']} ({stock['ts_code']}): {stock['confidence']:.2%}")
-```
-
-#### 回测已有脚本
-
-```
-from stock_asking_system.pipeline import backtest_asking_scripts
-
-# 回测所有已生成的脚本
-result = backtest_asking_scripts(
-    holding_periods=[1, 5],
-    top_n=20,
-    verbose=True
-)
-
-# 查看汇总
-for summary in result['summary']:
-    print(f"{summary['logic_name']}: {summary['stock_count']}只股票")
+print(f"脚本路径：{result['script_path']}")
 ```
 
 #### 查询配置
@@ -1184,7 +485,7 @@ class StockQueryConfig:
 
 系统支持多种自然语言查询：
 
-```
+```python
 # 行业筛选
 "通信设备行业中市值最大的 10 只股票"
 
@@ -1229,12 +530,6 @@ class StockQueryConfig:
 
 **回测详情**：
 ```
-回测：找出最近放量突破的股票：
-    1. 成交量较前期放大（至少 1.5 倍）
-    2. 涨幅>3%
-    3. 技术形态良好
-================================================================================
-
 筛选日：20260304
 筛选结果：20 只股票
 
@@ -1325,30 +620,14 @@ AI Agent 模块采用职责分离设计，包含以下组件：
    - 计算因子值
    - 执行回测
    
-   ```python
-   from factor_backtest_system.agent import AIFactorMiner
-   
-   miner = AIFactorMiner(data=df, api_key=api_key)
-   factors = miner.generate_factors(strategy, n_factors=3)
-   backtest_result = miner.backtest_factor(factor_spec)
-   ```
+
 
 2. **FactorMiningAgent** (`mining_agent.py`)
    - 流程协调代理，负责协调整个因子挖掘流程
    - 管理数据加载和组件生命周期
    - 生成因子脚本文件
    - 组织优化建议输出
-   
-   ```python
-   from factor_backtest_system.agent import FactorMiningAgent
-   
-   agent = FactorMiningAgent(api_key=api_key)
-   result = agent.run_complete_pipeline(
-       strategy=strategy,
-       n_factors=3,
-       strategy_name="近日强势股票"
-   )
-   ```
+
 
 3. **LLMFactorOptimizer** (`llm_optimizer.py`)
    - LLM 驱动的因子优化器
@@ -1356,15 +635,7 @@ AI Agent 模块采用职责分离设计，包含以下组件：
    - 生成代码修改建议
    - 支持置信度评分
    
-   ```python
-   from factor_backtest_system.agent import LLMFactorOptimizer
-   
-   optimizer = LLMFactorOptimizer(api_key=api_key)
-   optimization = optimizer.analyze_and_optimize_factor(
-       factor_definition=factor,
-       backtest_results=result
-   )
-   ```
+
 
 4. **RuleBasedFactorOptimizer** (`rule_based_optimizer.py`)
    - 基于规则的因子优化器（降级方案）
@@ -1413,7 +684,7 @@ AI Agent 模块采用职责分离设计，包含以下组件：
 
 ---
 
-#### Core 模块 (core/) - 🆕 全面升级
+#### Core 模块 (core/) 
 
 **核心功能模块**，提供通用的工具和服务。
 
@@ -1489,54 +760,6 @@ AI Agent 模块采用职责分离设计，包含以下组件：
   - 变量智能推断
   - **增强**：集成 DataAdapter 和 ExpressionHelpers
 
-**典型使用场景**：
-
-```python
-# 场景 1: 编写新工具函数（使用 DataAdapter 确保兼容性）
-from core.mcp import handle_tool_errors, DataAdapter
-
-@handle_tool_errors
-def custom_indicator(data, params):
-    """自定义指标"""
-    field = params.get('field', 'close')
-    window = params.get('window', 20)
-    
-    # 使用 DataAdapter 确保索引对齐
-    field_data = DataAdapter.ensure_series_with_index(data, data[field])
-    
-    # 应用分组操作（自动适配数据格式：双索引/单索引）
-    result = DataAdapter.apply_grouped_operation(
-        data, 
-        field_data, 
-        lambda x: x.rolling(window).mean()
-    )
-    
-    return result
-
-# 场景 2: AI 生成因子后验证（代码化约束）
-from core.mcp import SkillValidator
-
-validator = SkillValidator(SKILL_CONTENT, all_available_tools)
-result = validator.validate_factor_definition(generated_factor)
-
-if result.is_valid:
-    print("✅ 因子通过验证")
-else:
-    for error in result.errors:
-        print(f"❌ {error}")
-    for warning in result.warnings:
-        print(f"⚠️ {warning}")
-    for suggestion in result.suggestions:
-        print(f"💡 {suggestion}")
-
-# 场景 3: 策略分析工具推荐（智能匹配）
-from core.mcp import MCPConfig
-
-strategy = "我想做一个放量突破均线的动量策略"
-analysis = MCPConfig.analyze_strategy(strategy)
-relevant_tools = MCPConfig.get_relevant_tools_for_strategy(strategy)
-print(f"推荐工具：{relevant_tools}")
-```
 
 **快速参考**：详见 [`core/mcp/QUICK_REFERENCE.md`](core/mcp/QUICK_REFERENCE.md)
 
@@ -1587,33 +810,14 @@ logger.error("发生错误", exc_info=True)
 
 #### 因子数据加载器 (factor_data_loader.py)
 
-```python
-from datamodule import FactorDataLoader
-
-loader = FactorDataLoader()
-data = loader.load_backtest_data()  # 加载回测数据
-```
 
 #### 股票数据加载器 (stock_data_loader.py)
 
-```python
-from datamodule import StockDataLoader
-
-loader = StockDataLoader()
-data = loader.load_market_data()  # 加载市场数据
-industries = loader.get_available_industries()  # 获取行业列表
-```
 
 ### Data2Parquet模块 (data2parquet/)
 
 **数据获取与转换模块**，负责从数据源获取数据并转换为Parquet格式。
 
-- **data_fetcher.py**: 从Tushare等数据源获取数据
-- **data_generator.py**: 生成衍生数据（技术指标等）
-- **data_saver.py**: 保存数据为Parquet格式
-- **trade_calendar.py**: 交易日历管理
-
----
 
 ## 👨‍💻 开发指南
 
@@ -1869,179 +1073,6 @@ result = DataAdapter.apply_grouped_operation(
 
 ## 📝 更新日志
 
-### v1.3.1 (2026-03-12) - 🔧 配置优化与稳定性提升
-
-**用户体验优化 - 清晰、稳定、易维护**
-
-- ✅ **Prompt 配置模块化拆分**
-  - 将 `user_config.py` 按功能拆分为多个子模块
-  - `query_examples.py`：查询示例（用户可修改策略）
-  - `system_role.py`：AI 角色设定
-  - `query_format.py`：用户查询格式
-  - `screening_prompt.py`：筛选逻辑模板
-  - **优势**：结构清晰，职责单一，易于维护
-  
-- ✅ **字段定义统一管理**
-  - 移除 `screening_prompt.py` 中重复的字段列表
-  - 引导 AI 直接查阅 SKILL.md
-  - **效果**：避免信息不同步，减少维护成本
-  
-- ✅ **工具字典安全访问**
-  - 修复 `KeyError: 'name'` 问题
-  - 兼容不同的字段命名风格（`name`/`tool`、`description`/`desc`）
-  - 使用 `.get()` 方法安全访问，避免崩溃
-  
-- ✅ **模板加载优化**
-  - 直接从配置加载模板，不再尝试从文件加载
-  - 消除 `FileNotFoundError` 警告
-  - 代码更简洁清晰
-  
-- ✅ **字段名提示强化**
-  - 明确指出常见错误（如 `volume` vs `vol`）
-  - 提供正反示例对比
-  - 强调字段不存在的情况
-  - **效果**：减少 AI 生成错误字段名的概率
-
----
-
-### v1.3.0 (2026-03-11) - 🎯 全面升级与文档完善
-
-**系统架构全面优化 - 模块化、高性能、易维护**
-
-- ✅ **Agent 模块重构** - 职责分离设计
-  - `AIFactorMiner`：专注 LLM 调用与因子生成
-  - `FactorMiningAgent`：协调整个挖掘流程
-  - `LLMFactorOptimizer`：智能优化分析
-  - `RuleBasedFactorOptimizer`：降级后备方案
-  
-- ✅ **Pipeline 模块清晰化** - 统一调用入口
-  - `factor_mining_pipeline.py`：提供便捷函数和预定义策略
-  - 支持数据预加载，避免重复加载
-  - 完整的流程编排和结果汇总
-  
-- ✅ **回测报告规范化** - 结构化输出
-  - 新增 `backtest_report.py`：统一的报告格式化模块
-  - 多持有期回测结果展示
-  - 分组收益详细统计
-  - 个股收益率排名
-  
-- ✅ **数据预处理优化** - 多持有期收益率预计算
-  - 在回测前一次性计算所有持有期的未来收益率
-  - 避免重复计算，提升性能
-  - 支持动态持有期配置
-  
-- ✅ **MCP 模块增强** - 时间序列函数优化
-  - numpy 数组操作替代 pandas apply
-  - 技术指标计算性能提升 5-10 倍
-  - 封装优化的指标计算函数
-
-**新增功能**:
-- 数据预加载机制（所有策略共享数据）
-- 详细的样本诊断信息
-- 改进的日志输出和错误处理
-
----
-
-### v1.2.0 (2026-03-10) - 🎉 MCP 模块重构与性能优化
-
-**MCP 工具模块全面重构 - 模块化、类型安全、高性能**
-
-- ✅ **新增 utils.py** - 公共工具函数库
-  - `DataAdapter` 类：智能适配双索引/单索引数据格式
-  - `ExpressionHelpers` 类：表达式辅助函数
-  - 便捷函数：`get_groupby_key`, `apply_grouped_operation`, `ensure_series_with_index`
-  
-- ✅ **新增 exceptions.py** - 统一异常处理体系
-  - 完整的异常类层次结构（基类 `MCPError`）
-  - 特定异常类型：`ToolExecutionError`, `ExpressionEvalError`, `InvalidFieldError`, `DataFormatError`
-  - 错误码常量定义 (`ErrorCodes` 类)
-  - 装饰器工具：`@handle_tool_errors`, `@validate_expression`
-  
-- ✅ **新增 mcp_config.py** - 配置统一管理
-  - `MCPConfig` 类集中管理所有配置
-  - `TOOL_CATEGORIES`: 工具分类定义
-  - `STRATEGY_KEYWORDS`: 策略关键词映射
-  - 便捷的配置查询方法：`get_tools_by_category`, `analyze_strategy`, `get_relevant_tools_for_strategy`
-  
-- ✅ **新增 skill_validator.py** - 技能验证器
-  - `SkillValidator` 类验证因子定义
-  - 字段验证：只能使用标准字段
-  - 工具验证：只能使用合法工具
-  - 表达式验证：语法正确性和复杂度检查
-  - `ValidationResult`: 结构化验证结果（包含 errors, warnings, suggestions）
-  
-- ✅ **性能优化** - 时间序列函数优化
-  - 将 `rolling.apply + lambda` 重构为 numpy 数组操作
-  - 预分配结果数组避免动态增长
-  - 简化计算逻辑（如用 sum 比较替代完整排序）
-  - 封装 `calc_xxx_optimized` 和 wrapper 函数
-  - 保留 numba 扩展支持
-  - **性能提升**: 技术指标计算速度提升 5-10 倍
-  
-- ✅ **代码质量提升**
-  - 消除重复代码，提取公共函数
-  - 统一错误处理机制
-  - 改进日志输出
-  - 增强类型检查与运行时验证
-
-**文档与示例**:
-- 新增 `core/mcp/QUICK_REFERENCE.md` - 快速参考指南
-- 新增 `core/mcp/examples_usage.py` - 使用示例代码
-- 完善异常处理文档
-
----
-
-### v1.1.0 (2026-03-02) - 架构重构 - Agent 模块职责分离
-
-- ✅ **AIFactorMiner** 重构为真正的 LLM Agent
-  - 专注于调用 LLM API 生成因子定义
-  - 执行工具调用链
-  - 计算因子值和回测
-  
-- ✅ **FactorMiningAgent** 独立为流程协调代理
-  - 协调整个因子挖掘流程
-  - 管理数据加载和组件生命周期
-  - 生成因子脚本和优化建议
-  
-- ✅ **LLMFactorOptimizer** 优化器增强
-  - 支持深度优化分析
-  - 提供代码修改建议
-  - 置信度评分机制
-  
-- ✅ **Pipeline 模块**职责明确
-  - `factor_mining_pipeline.py` 作为调用入口
-  - 提供便捷函数和预定义策略
-  
-- ✅ **回测输出规范化**
-  - 结构化回测报告格式
-  - 增加收益统计和个股排名
-  - 改进输出控制，减少冗余信息
-  
-- ✅ **代码质量提升**
-  - 修复 KeyError 问题（`iteration_plan` 等字段的安全访问）
-  - 统一错误处理机制
-  - 改进日志输出
-
-### v1.0.0 (2024-01-01)
-
-**初始版本发布**
-
-- ✅ 因子回测系统完整实现
-- ✅ 股票查询系统完整实现
-- ✅ MCP 工具管理系统
-- ✅ 数据加载和管理模块
-- ✅ 配置管理系统
-- ✅ 日志和异常处理系统
-
-**核心功能**:
-- AI 驱动的因子生成（支持工具调用链）
-- 多持有期回测（预计算收益率机制）
-- 自然语言股票查询
-- 筛选逻辑自动生成
-- 收益率回测评估
-- 智能优化建议（LLM + 规则双模式）
-
----
 
 ## 📄 许可证
 

@@ -7,20 +7,7 @@
     <list default="true" id="6a65fb83-799f-488a-9e47-69186f138516" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/agent/ai_factor_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/agent/ai_factor_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/agent/mining_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/generators/factor_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/generators/factor_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/pipeline/factor_mining_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/pipeline/factor_mining_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/factor_backtest_system/prompt/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/factor_config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/factor_backtest_system/prompt/factor_prompts.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/agent/screening_logic_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/agent/screening_logic_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260311_231459.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/asking_scripts/放量突破股票_20260311_231636.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_asking_system/prompt/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/asking_config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/asking_prompts.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_asking_system/prompt/screening_system.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/mcp/REFACTOR_SUMMARY.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
