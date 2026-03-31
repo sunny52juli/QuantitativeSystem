@@ -3,7 +3,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-一个基于AI大模型的智能量化交易系统，包含**因子回测系统**和**股票查询系统**两大核心模块。系统利用LLM（大语言模型）自动生成量化因子和股票筛选逻辑，并提供完整的回测和评估功能。
+一个基于AI大模型的智能量化交易系统，包含**因子挖掘系统**和**股票查询系统**两大核心模块。系统利用LLM（大语言模型）自动生成量化因子和股票筛选逻辑，并提供完整的回测和评估功能。
 
 ---
 
@@ -14,7 +14,7 @@
 - [系统架构](#系统架构)
 - [快速开始](#快速开始)
 - [详细使用指南](#详细使用指南)
-  - [因子回测系统](#因子回测系统)
+  - [因子挖掘系统](#因子挖掘系统)
   - [股票查询系统](#股票查询系统)
 - [配置说明](#配置说明)
 - [模块详解](#模块详解)
@@ -28,7 +28,7 @@
 
 **QuantitativeSystem** 是一个创新的量化交易系统，将人工智能与量化投资深度结合：
 
-### 系统一：因子回测系统 (Factor Backtest System)
+### 系统一：因子挖掘系统 (Factor Backtest System)
 
 **主函数**: `factor_backtest_system/run_factor_mining.py`
 
@@ -52,7 +52,7 @@
 
 ## ✨ 核心功能
 
-### 因子回测系统核心功能
+### 因子挖掘系统核心功能
 
 1. **AI 因子生成**（AIFactorMiner）
    - 基于策略描述自动生成量化因子
@@ -112,7 +112,7 @@
 
 ```
 QuantitativeSystem/
-├── factor_backtest_system/    # 因子回测系统
+├── factor_backtest_system/    # 因子挖掘系统
 │   ├── agent/                  # AI Agent 模块
 │   │   ├── ai_factor_agent.py  # LLM Agent（调用 API 生成因子）
 │   │   ├── mining_agent.py     # 流程协调代理
@@ -168,7 +168,7 @@ QuantitativeSystem/
 │   ├── api.py                  # API 配置
 │   ├── data_fields.py          # 数据字段定义
 │   ├── data_path.py            # 数据路径配置
-│   ├── factor_backtest_config.py  # 因子回测配置
+│   ├── factor_backtest_config.py  # 因子挖掘配置
 │   ├── stock_query_config.py   # 股票查询配置
 │   └── tool_config.py          # 工具配置
 │
@@ -178,7 +178,7 @@ QuantitativeSystem/
 
 ### 工作流程
 
-#### 因子回测系统工作流程
+#### 因子挖掘系统工作流程
 
 ```
 用户输入策略描述
@@ -285,7 +285,7 @@ python data2parquet/data_fetcher.py
 
 ### 快速运行
 
-#### 运行因子回测系统
+#### 运行因子挖掘系统
 
 ```bash
 # 因子挖掘完整模式
@@ -608,7 +608,7 @@ class DataPathConfig:
 
 ### Factor Backtest System 模块 (factor_backtest_system/)
 
-**因子回测系统**，基于AI大模型的智能因子挖掘和回测平台。
+**因子挖掘系统**，基于AI大模型的智能因子挖掘和回测平台。
 
 #### Agent 模块 (agent/)
 
@@ -658,7 +658,7 @@ AI Agent 模块采用职责分离设计，包含以下组件：
 
 回测引擎模块：
 
-- **factor_backtest.py**: 因子回测框架
+- **factor_backtest.py**: 因子挖掘框架
   - `FactorMiningFramework`: 回测执行类
   - 多持有期同时回测
   - 分组收益计算
